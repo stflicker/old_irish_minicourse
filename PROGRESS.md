@@ -4,3 +4,4 @@ The scheduled daily job adds a row once its date arrives. `published` means the 
 
 | Lesson | Date (JST) | Status | Minutes | Difficulty / 5 | Note |
 |---|---|---|---:|---:|---|
+| OI-D001 | 2026-10-10 | published | — | — | — |
