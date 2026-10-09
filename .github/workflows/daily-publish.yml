@@ -1,0 +1,64 @@
+name: Old Irish daily publication
+
+on:
+  schedule:
+    # 07:20 JST (22:20 UTC on the previous date)
+    - cron: '20 22 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'FIRST_28_DAYS.md'
+      - 'lessons/**'
+      - 'scripts/**'
+      - 'docs/style.css'
+      - 'docs/app.js'
+      - '.github/workflows/daily-publish.yml'
+
+# Generate and publish the Pages artifact directly. A commit made with the
+# workflow GITHUB_TOKEN does not itself trigger a branch-based Pages build.
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: old-irish-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install small site-build dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Write scheduled publication record
+        run: python scripts/daily_publish.py
+      - name: Build HTML site from curriculum and authored Markdown lessons
+        run: python scripts/build_site.py
+      - name: Commit generated site and progress log
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs PROGRESS.md
+          if ! git diff --cached --quiet; then
+            git commit -m "daily: rebuild Old Irish site and record"
+            git push
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+      - name: Deploy interactive site
+        id: deploy
+        uses: actions/deploy-pages@v4
