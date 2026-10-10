@@ -65,6 +65,7 @@
     $('mark-complete').disabled=correct!==questions.length;
     $('copy-record').disabled=!state.completed;
     $('download-record').disabled=!state.completed;
+    const submit=$('submit-feedback'); if(submit) submit.disabled=!state.completed;
     if(state.completed)show('Saved in this browser · '+(state.completionDate||'date unknown')+' JST. Export or report your results in chat.');
     else if(correct===questions.length)show('All correct. Enter a time/difficulty (optional), then mark complete.');
     else show('Answer all questions to unlock completion.');
@@ -112,6 +113,40 @@
     document.body.appendChild(link);link.click();link.remove();
     setTimeout(()=>URL.revokeObjectURL(link.href),1000);
     show('Exported PROGRESS.md from this browser. Server record is not updated by this download.');
+  });
+  // GitHub's authenticated New Issue page is the submission endpoint.
+  // Never embed a repository write token in a public GitHub Pages page.
+  const submit = document.createElement('button');
+  submit.type = 'button';
+  submit.className = 'btn btn-main';
+  submit.id = 'submit-feedback';
+  submit.textContent = 'Submit feedback to GitHub';
+  submit.disabled = !state.completed;
+  const box = document.createElement('p');
+  box.className = 'note';
+  box.id = 'github-submit-help';
+  box.textContent = 'After completing the quiz, submit your record through GitHub. You must sign in and click Submit new issue to confirm; saving in this browser alone does not sync.';
+  const controls = $('copy-record').parentElement;
+  controls.appendChild(submit);
+  controls.insertAdjacentElement('afterend', box);
+  function githubFeedbackURL(){
+    const body = [
+      'Old Irish study feedback — submitted by the learner.',
+      '',
+      '<!-- This structured row is used by the course feedback automation. -->',
+      lineFor(id, state),
+      '',
+      'I explicitly confirm this lesson is completed.'
+    ].join('\\n');
+    return 'https://github.com/stflicker/old_irish_minicourse/issues/new?title='+
+      encodeURIComponent('[Old Irish Feedback] '+id)+
+      '&body='+encodeURIComponent(body);
+  }
+  submit.addEventListener('click',()=>{
+    if (!state.completed || !state.solved.every(Boolean)) return;
+    // Open the authenticated GitHub confirmation step.
+    window.open(githubFeedbackURL(),'_blank','noopener,noreferrer');
+    show('GitHub opened. Sign in if needed, then click Submit new issue to synchronize the record.');
   });
   $('reset-practice').addEventListener('click',()=>{
     if(!confirm('Reset this day\'s answers and local progress record?'))return;
