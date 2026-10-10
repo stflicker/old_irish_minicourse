@@ -137,7 +137,7 @@
       lineFor(id, state),
       '',
       'I explicitly confirm this lesson is completed.'
-    ].join('\\n');
+    ].join('\n');
     return 'https://github.com/stflicker/old_irish_minicourse/issues/new?title='+
       encodeURIComponent('[Old Irish Feedback] '+id)+
       '&body='+encodeURIComponent(body);
