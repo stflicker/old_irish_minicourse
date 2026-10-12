@@ -16,6 +16,15 @@
 4. Each new lesson must identify the Stifter section; use Thurneysen and reliable academic editions for cross-checking, plus eDIL for historical lexicon, Matasović/McCone for comparative Celtic/PIE. Mark reconstruction with `*` and distinguish book paradigm from attested text.
 5. Do not reproduce long copyrighted textbook passages; cite sections and use original short exercises or legitimate small excerpts with proper source attribution.
 
+## Historical-comparative content standard (v0.5)
+
+- The daily grammatical target and 28-day order do **not** change. Each `lessons/OI-D###.md` now has a substantial **Comparison (optional)** section, opened by default in HTML.
+- The historical explanation should trace **PIE morphology → Celtic/early Irish developments → the attested Old Irish paradigm**, then name the innovation or continuity explicitly.
+- Distinguish **inherited categories** (e.g., neuter nominative–accusative identity) from **phonologically conditioned allomorphy** (raising, palatalization, apocope), **analogical substitutions** (e.g., thematic genitive `*-ī`), and **new grammaticalization** (definite article).
+- Always distinguish a **reconstructed** preform (starred), a directly **attested** form (e.g., Ogham MAQI), a **pedagogical paradigm** and a **disputed explanation**. Do not mechanically derive every Old Irish ending from a single PIE suffix.
+- Historical sections can require about **5–8 extra optional minutes** beyond the 10–15-minute active lesson. Use accessible comparative references and preserve a link to `HISTORICAL_MORPHOLOGY.md`.
+- Existing `PROGRESS.md` completion and feedback records must not be changed during historical-content revisions.
+
 ## Daily task, file publishing, record
 
 - Calendar: Day 001 = **2026-10-10 JST**. Day N is calendar day N of the opening 28-day sequence. Delivery is independent of completion.

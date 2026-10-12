@@ -13,6 +13,10 @@ A small Markdown-led course with an interactive static HTML reader, an automatic
 - [The locked first 28 days](FIRST_28_DAYS.md) → the canonical topic order (copied *unchanged* from v0.2).
 - [Progress](PROGRESS.md) → one row per scheduled day once the daily job runs.
 
+## New: historical morphology track (v0.5)
+
+Every daily lesson now offers an **expanded, open-by-default historical morphology section**: PIE reconstructed forms and functions; their Proto-Celtic/early Irish development; Old Irish inflection; and the distinction between regular sound change, inherited categories, analogical innovations and debated hypotheses. The core practical lesson stays around 10–15 minutes; the historical section adds about 5–8 optional minutes. [Comparative morphology guide](HISTORICAL_MORPHOLOGY.md).
+
 ## How the files relate
 
 | File | Purpose |
@@ -21,6 +25,8 @@ A small Markdown-led course with an interactive static HTML reader, an automatic
 | `CURRICULUM.md` | Overall textbook progression after these days |
 | `lessons/OI-D###.md` | Actual authored content and questions for that day |
 | `docs/days/###.html` | Built interactive page, generated from lesson Markdown |
+| `HISTORICAL_MORPHOLOGY.md` | Comparative background, evidence standards and sources |
+| `docs/history.html` | Published historical morphology guide |
 | `PROGRESS.md` | Automatically receives the daily publication/awaiting-content row |
 | `scripts/daily_publish.py` | Determines due day in Japan; updates the record |
 | `scripts/build_site.py` | Builds all 28 pages from the Markdown |
@@ -29,7 +35,7 @@ A small Markdown-led course with an interactive static HTML reader, an automatic
 
 ## Important limits
 
-- **Only Day 001 is fully authored and interactive today.** The 27 other days have honest curriculum-target pages, not invented grammar lessons.
+- **All Days 001–028 have authored interactive Markdown lessons and generated HTML pages.** The historical morphology track has been expanded in each lesson. Structural build checks do not replace manual philological review; examples and reconstructions are cited and must be interpreted with their stated evidentiary limits.
 - After GitHub repository creation, Pages Actions configuration, and a successful test run, `PROGRESS.md` **will gain a daily row**, either `published` or `awaiting_content`.
 - To deliver a new substantive HTML lesson each day, a lesson Markdown file must first be written and committed. The ChatGPT daily task can be instructed to do that via a **connected GitHub account**, subject to available app actions/approval. The GitHub connection exists, but writing to a course repository from a scheduled task has not yet been tested.
 - Buttons save learning results in the current browser. They cannot update `PROGRESS.md` in GitHub directly without another authenticated writing pathway. Learner completion is recorded only after a reply or explicit transfer.

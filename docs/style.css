@@ -82,3 +82,18 @@
 .badge-wait{color:#96734c}
 .hero-word{font-size:clamp(38px,6vw,72px)}
 @media(max-width:780px){.index-list{overflow-x:auto}.index-list table{min-width:580px}}
+/* v0.5: comparative morphology track; readable by default, optional to collapse. */
+.historical-intro{font-size:13px;color:#5e6148;line-height:1.55;margin:0 0 9px}
+.historical-guide{font-size:13px;margin:14px 0 0}
+.historical-guide a{color:#245946;font-weight:700}
+.historical .inside.content{font-size:14px;overflow-wrap:break-word}
+.historical .inside.content h3{font:600 17px/1.4 Georgia,serif;margin:20px 0 10px;color:#36583b}
+.historical .inside.content table{display:block;max-width:100%;overflow-x:auto}
+.historical .inside.content table td:nth-child(2){font-size:14px}
+.historical .inside.content td,.historical .inside.content th{min-width:75px}
+.historical .inside.content p,.historical .inside.content li{line-height:1.63}
+.historical .inside.content blockquote{border-left:3px solid #b3a771;margin:9px 0;padding-left:12px}
+#historical-guide .content h2{font:normal 23px/1.25 Georgia,serif;margin:24px 0 10px}
+#historical-guide .content h3{font-size:17px}
+#historical-guide .content table{display:block;max-width:100%;overflow-x:auto}
+#historical-guide .content li{margin-bottom:6px}

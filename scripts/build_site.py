@@ -103,7 +103,7 @@ def render_lesson(entry:Entry, data):
 <p id="status" class="status" aria-live="polite">Answer all questions to unlock completion.</p>
 <div class="manual" id="manual-box" hidden><label for="manual-text">Select and copy the record:</label><textarea id="manual-text" readonly></textarea></div>
 <p class="note">Saved only in this browser. Export the Markdown record or report completion in ChatGPT. This does not directly write back to the hosted GitHub file.</p>'''
-    compare_panel=panel('04 / COMPARISON','Historical note',f'<details><summary>Show comparison</summary><div class="inside content">{comparison}</div></details>','comparison','historical') if comparison else ''
+    compare_panel=panel('04 / HISTORICAL MORPHOLOGY','PIE → Celtic → Old Irish',f'<p class="historical-intro">Extended analysis of inheritance, sound change, analogy and innovations · optional 5–8 minutes</p><details open><summary>Historical analysis and sources (tap to collapse)</summary><div class="inside content">{comparison}</div></details><p class="historical-guide"><a href="../history.html">Read the comparative morphology guide →</a></p>','comparison','historical') if comparison else ''
     body=f'''<section class="hero" aria-labelledby="title"><div>
 <div class="kicker">{e(data['category'])} · STIFTER §{e(data['stifter'])}</div>
 <h1 id="title">{e(title)}</h1><p class="lead">{e(subtitle)}</p>
@@ -140,6 +140,9 @@ def render_index(entries, available):
 </section>
 <section class="panel index-list"><div class="panelhead"><span class="index">CURRICULUM FROM FIRST_28_DAYS.MD</span></div><h2>Lessons</h2>
 <table class="plan-table"><thead><tr><th>Day</th><th>Japan date</th><th>Stifter</th><th>Focus</th><th>Content</th></tr></thead><tbody>'''+''.join(trs)+'''</tbody></table><p class="legend">The topic list is built from <code>FIRST_28_DAYS.md</code>. 'Not authored' means the interactive grammar lesson has not been verified and published yet.</p></section>
+<section class="panel"><div class="panelhead"><span class="index">DEEPER HISTORICAL MORPHOLOGY</span></div><h2>PIE → Celtic → Old Irish</h2>
+<p>Each lesson includes a new extended historical analysis: inherited paradigms, phonological developments, analogical changes, and competing reconstructions.</p>
+<a class="btn" href="history.html" style="text-decoration:none">Read the comparative guide →</a></section>
 <footer class="foot"><p>Each completed lesson stores a session record in your browser, exportable as Markdown. The website itself has no access to your private ChatGPT messages or local files.</p></footer>
 <script>const start=Date.UTC(2026,9,10);let s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());let p=s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!p){let a=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());let ob=Object.fromEntries(a.map(v=>[v.type,v.value]));p=[0,ob.year,ob.month,ob.day]};let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;if(idx>28)idx=28;document.getElementById('today-heading').textContent='Day '+String(idx).padStart(3,'0');document.getElementById('today-link').href='days/'+String(idx).padStart(3,'0')+'.html';document.querySelector('tr[data-day="'+idx+'"]').classList.add('today-row');document.getElementById('today-label').textContent=s+' JST';</script>'''
     return shell('Daily Old Irish',body)
@@ -154,6 +157,13 @@ def main():
         if content:ready.add(ent.day)
         (PAGES/lesson_link(ent.day)).write_text(render_lesson(ent,content),encoding='utf-8')
     (ROOT/'docs'/'index.html').write_text(render_index(entries,ready),encoding='utf-8')
+    historical_guide=ROOT/'HISTORICAL_MORPHOLOGY.md'
+    if historical_guide.is_file():
+        guide_html=MARKDOWN(historical_guide.read_text(encoding='utf-8'))
+        guide_body='<section class="hero"><div><div class="kicker">REFERENCE · HISTORICAL MORPHOLOGY</div><h1>PIE → Celtic → Old Irish</h1><p class="lead">A comparative guide to inheritance, phonological change, analogy, and innovation.</p></div><div class="hero-word" aria-hidden="true">PIE</div></section>'
+        guide_body+=panel('HISTORICAL METHOD','A guide to the evidence','<div class="content historical-prose">'+guide_html+'</div>','historical-guide','historical')
+        guide_body+='<nav class="day-nav"><a href="index.html">← All 28 lessons</a><span>Stifter (2006) · comparative references</span></nav>'
+        (ROOT/'docs'/'history.html').write_text(shell('Historical morphology guide',guide_body),encoding='utf-8')
     print(f'Built {len(entries)} scheduled pages, {len(ready)} with authored interactive lessons')
 
 if __name__=='__main__':main()
