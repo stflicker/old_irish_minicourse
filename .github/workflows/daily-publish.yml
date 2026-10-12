@@ -2,8 +2,8 @@ name: Old Irish daily publication
 
 on:
   schedule:
-    # 07:20 JST (22:20 UTC on the previous date)
-    - cron: '20 22 * * *'
+    # 02:17 JST (17:17 UTC on the previous date). Leave a buffer for late schedules.
+    - cron: '17 17 * * *'
   workflow_dispatch:
   issues:
     types: [opened]
@@ -52,6 +52,25 @@ jobs:
         run: python scripts/daily_publish.py
       - name: Build HTML site from curriculum and authored Markdown lessons
         run: python scripts/build_site.py
+      - name: Validate the prebuilt 28-day lesson packet
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+          for day in range(1, 29):
+              number = f'{day:03d}'
+              page = (Path('docs') / 'days' / f'{number}.html').read_text(encoding='utf-8')
+              assert 'Lesson not yet published' not in page, number
+              assert '<script id="lesson-data" type="application/json">' in page, number
+              match = re.search(r'<script id="lesson-data" type="application/json">(.*?)</script>', page, re.S)
+              assert match, number
+              meta = json.loads(match.group(1))
+              assert meta.get('id') == f'OI-D{number}', number
+              assert 1 <= len(meta.get('questions', [])) <= 2, number
+              assert '<table>' in page, number
+          print('All 28 pages contain authored content, tables, and interactive questions.')
+          PY
       - name: Commit generated site and progress log
         run: |
           git config user.name 'github-actions[bot]'
@@ -70,3 +89,28 @@ jobs:
       - name: Deploy interactive site
         id: deploy
         uses: actions/deploy-pages@v4
+      - name: Verify the live public HTML lesson
+        env:
+          PAGES_URL: ${{ steps.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          DAY=$(python - <<'PY'
+          from datetime import datetime, date
+          from zoneinfo import ZoneInfo
+          today = datetime.now(ZoneInfo('Asia/Tokyo')).date()
+          day = (today - date(2026, 10, 10)).days + 1
+          print(f'{min(max(day, 1), 28):03d}')
+          PY
+          )
+          URL="${PAGES_URL%/}/days/${DAY}.html"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            if curl --fail --location --silent --show-error --max-time 15 "$URL" -o /tmp/oi-lesson.html; then
+              if grep -Fq 'id="lesson-data"' /tmp/oi-lesson.html && grep -Fq '"id": "OI-D'"${DAY}"'"' /tmp/oi-lesson.html && ! grep -Fq 'Lesson not yet published' /tmp/oi-lesson.html; then
+                echo "Public lesson verified at: $URL"
+                exit 0
+              fi
+            fi
+            sleep 12
+          done
+          echo "::error::GitHub Pages did not serve a verified interactive lesson at $URL"
+          exit 1
