@@ -17,3 +17,4 @@ The scheduled daily job adds a row once its date arrives. `published` means the 
 | OI-D011 | 2026-10-20 | published | — | — | — |
 | OI-D012 | 2026-10-21 | published | — | — | — |
 | OI-D013 | 2026-10-22 | published | — | — | — |
+| OI-D014 | 2026-10-23 | published | — | — | — |
