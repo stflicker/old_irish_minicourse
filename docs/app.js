@@ -5,7 +5,7 @@
   if (!payload) return;
   const {id, questions} = JSON.parse(payload.textContent);
   const key = 'sengoidelc:v3:' + id;
-  const empty = () => ({solved: [], completed: false, minutes:'', difficulty:'', note:'', completionDate:''});
+  const empty = () => ({solved: [], minutes:'', difficulty:'', note:''});
   let state = empty();
   let storageAvailable = true;
   const $ = x => document.getElementById(x);
@@ -25,23 +25,11 @@
     const x=Object.fromEntries(parts.map(p=>[p.type,p.value]));
     return x.year+'-'+x.month+'-'+x.day;
   }
-  const safe = t => String(t || '—').replace(/[\r\n]+/g,' ').replaceAll('|','\\|').trim() || '—';
-  function lineFor(lesson, st){
-    return '| '+[lesson,st.completionDate||dateJST(),'completed',safe(st.minutes),safe(st.difficulty),safe(st.note)].join(' | ')+' |';
-  }
-  function recordText(){
-    const rows=[];
-    for(let i=1;i<=28;i++){
-      const day='OI-D'+String(i).padStart(3,'0');
-      try {
-        const d=day===id ? state : JSON.parse(localStorage.getItem('sengoidelc:v3:'+day) || 'null');
-        if(d && d.completed) rows.push(lineFor(day,d));
-      } catch (_err) { /* if corrupt data, skip this day */ }
-    }
-    return '# Old Irish — learner progress (browser export)\n\n'+
-      'This is a copy of completed sessions saved in this browser. It does not automatically update the canonical GitHub PROGRESS.md file.\n\n'+
-      '| Lesson | Date (JST) | Status | Minutes | Difficulty / 5 | Note |\n|---|---|---|---:|---:|---|\n'+
-      rows.join('\n') + '\n';
+  function feedbackURL(){
+    const clean = x => String(x ?? '').replace(/[\r\n|]+/g,' ').trim() || '—';
+    const row = '| '+[id,dateJST(),'completed',clean(state.minutes),clean(state.difficulty),clean(state.note)].join(' | ')+' |';
+    const body = ['Old Irish learner feedback','', '<!-- Structured row for feedback automation. -->',row,'','I explicitly confirm that I have completed this lesson.'].join('\n');
+    return 'https://github.com/stflicker/old_irish_minicourse/issues/new?title='+encodeURIComponent('[Old Irish Feedback] '+id)+'&body='+encodeURIComponent(body);
   }
   function paint(){
     $('minutes').value=state.minutes;
@@ -62,13 +50,9 @@
         btn.setAttribute('aria-pressed',String(state.solved[i] && Number(btn.dataset.option)===Number(q.correct)));
       });
     });
-    $('mark-complete').disabled=correct!==questions.length;
-    $('copy-record').disabled=!state.completed;
-    $('download-record').disabled=!state.completed;
-    const submit=$('submit-feedback'); if(submit) submit.disabled=!state.completed;
-    if(state.completed)show('Saved in this browser · '+(state.completionDate||'date unknown')+' JST. Export or report your results in chat.');
-    else if(correct===questions.length)show('All correct. Enter a time/difficulty (optional), then mark complete.');
-    else show('Answer all questions to unlock completion.');
+    const ready=correct===questions.length;
+    const submit=$('submit-feedback'); if(submit)submit.disabled=!ready;
+    show(ready ? 'Quiz ready. Submit the GitHub Issue to record completion; opening the form alone does not count.' : 'Practice is not a completion record. Solve the questions, then explicitly submit via GitHub.');
   }
   document.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',()=>{
     const i=Number(btn.dataset.question);
@@ -84,76 +68,16 @@
     $('toggle-forms').setAttribute('aria-pressed',String(hidden));
   });
   ['minutes','difficulty','note'].forEach(x => $(x).addEventListener('input',()=>{state[x]=$(x).value;persist();}));
-  $('mark-complete').addEventListener('click',()=>{
-    if(state.solved.every(Boolean)){
-      state.completed=true;
-      state.completionDate=state.completionDate || dateJST();
-      persist();paint();
-    }
-  });
-  $('copy-record').addEventListener('click',async()=>{
-    if(!state.completed)return;
-    const row=lineFor(id,state);
-    try {
-      if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');
-      await navigator.clipboard.writeText(row);
-      show('Copied the Markdown progress row. Paste it into ChatGPT or your record.');
-    } catch (_err) {
-      $('manual-box').hidden=false;
-      $('manual-text').value=row;
-      $('manual-text').focus();$('manual-text').select();
-      show('Clipboard blocked. Select and copy the row below.');
-    }
-  });
-  $('download-record').addEventListener('click',()=>{
-    if(!state.completed)return;
-    const blob=new Blob([recordText()],{type:'text/markdown;charset=utf-8'});
-    const link=document.createElement('a');
-    link.download='PROGRESS.md';link.href=URL.createObjectURL(blob);
-    document.body.appendChild(link);link.click();link.remove();
-    setTimeout(()=>URL.revokeObjectURL(link.href),1000);
-    show('Exported PROGRESS.md from this browser. Server record is not updated by this download.');
-  });
-  // GitHub's authenticated New Issue page is the submission endpoint.
-  // Never embed a repository write token in a public GitHub Pages page.
-  const submit = document.createElement('button');
-  submit.type = 'button';
-  submit.className = 'btn btn-main';
-  submit.id = 'submit-feedback';
-  submit.textContent = 'Submit feedback to GitHub';
-  submit.disabled = !state.completed;
-  const box = document.createElement('p');
-  box.className = 'note';
-  box.id = 'github-submit-help';
-  box.textContent = 'After completing the quiz, submit your record through GitHub. You must sign in and click Submit new issue to confirm; saving in this browser alone does not sync.';
-  const controls = $('copy-record').parentElement;
-  controls.appendChild(submit);
-  controls.insertAdjacentElement('afterend', box);
-  function githubFeedbackURL(){
-    const body = [
-      'Old Irish study feedback — submitted by the learner.',
-      '',
-      '<!-- This structured row is used by the course feedback automation. -->',
-      lineFor(id, state),
-      '',
-      'I explicitly confirm this lesson is completed.'
-    ].join('\n');
-    return 'https://github.com/stflicker/old_irish_minicourse/issues/new?title='+
-      encodeURIComponent('[Old Irish Feedback] '+id)+
-      '&body='+encodeURIComponent(body);
-  }
-  submit.addEventListener('click',()=>{
-    if (!state.completed || !state.solved.every(Boolean)) return;
-    // Open the authenticated GitHub confirmation step.
-    window.open(githubFeedbackURL(),'_blank','noopener,noreferrer');
-    show('GitHub opened. Sign in if needed, then click Submit new issue to synchronize the record.');
+  $('submit-feedback').addEventListener('click',()=>{
+    if(!state.solved.every(Boolean))return;
+    window.open(feedbackURL(),'_blank','noopener,noreferrer');
+    show('GitHub form opened. Click “Submit new issue” there to record completion; it is not yet recorded.');
   });
   $('reset-practice').addEventListener('click',()=>{
     if(!confirm('Reset this day\'s answers and local progress record?'))return;
     state=empty();state.solved=Array.from({length:questions.length},()=>false);
     persist();
     questions.forEach((_q,i)=>{$('feedback-'+i).textContent='';});
-    $('manual-box').hidden=true;
     paint();
   });
   paint();
