@@ -1,4 +1,4 @@
-# Daily Old Irish teaching and publication protocol (v0.4)
+# Daily Old Irish teaching and publication protocol (v0.6)
 
 ## Learner and pace
 
@@ -34,13 +34,16 @@
 - A `published` row never proves completion; set `completed`, `in_progress`, `needs_revisit`, or `skipped` only on learner feedback. Preserve existing learner statuses when the daily Action reruns.
 - If GitHub is not connected, the ChatGPT task should deliver the actual lesson **in chat**, provide a self-contained downloadable HTML file only if the file-creation tools really work in that task, and describe progress as **not yet synced**. Do not promise an unattested sandbox link or editing of a user's local file.
 
-## HTML interactions
+## HTML interactions and learner completion (v0.6)
 
-- All interactivity is plain browser JS, no external packages or API keys.
-- Multiple-choice buttons respond immediately; answers can be retried without revealing the solution after an error. Hints and historical notes are expandable. Paradigm forms can be hidden and shown.
-- `Mark complete` unlocks after all questions are answered correctly and stores a browser-local record.
-- `Copy record` exports a Markdown row; `Download PROGRESS.md` exports browser-completed rows. These do **not** write the repository file.
-- A server/API would be necessary for secure direct cross-device updates from the browser. It is not part of v0.4.
+- Every distinct word whose paradigm is taught must have its **own labelled table**; use cases as rows and singular/plural as columns when useful. Do not describe a second lexical paradigm only in prose.
+- Explain morphology in direct sequence: **form → function → exactly what changed → an example**. Name the technical concept after demonstrating it. Distinguish regular changes from exceptions.
+- The active rule, worked example, and PIE/Celtic historical origin must be clearly separated visually. Historical comparison should name the inherited feature or innovation, with uncertainty marked.
+- Singular and plural forms may appear together in a day even if its active target emphasizes one number. The locked 28-day topic order stays intact.
+- The website records completion **only via the learner's submitted GitHub Issue**, processed by the existing GitHub feedback workflow. Opening the Issue form is insufficient. Quiz answers, local storage, and notifications must not set canonical completion.
+- The page has fields for time, difficulty and note and a single **Submit completion via GitHub Issue** action. No copy-to-ChatGPT, clipboard or Download PROGRESS.md workflow is required.
+- Browser-local quiz state may be saved for convenience but is not canonical progress.
+
 
 ## Adjustments
 
