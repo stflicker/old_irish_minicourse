@@ -95,14 +95,13 @@ def render_lesson(entry:Entry, data):
     practice=score+''.join(q_html)
     practice+='<details><summary>Hints (open only if needed)</summary><div class="inside"><ol>' + ''.join('<li>'+e(q.get('hint','Try reading the table once more.'))+'</li>' for q in data['questions']) + '</ol></div></details>'
     practice+='<details><summary>Manual answer key (if the buttons are blocked)</summary><div class="inside"><ol>' + ''.join('<li>'+e(q['options'][int(q['correct'])])+'</li>' for q in data['questions']) + '</ol></div></details>'
-    record='''<div class="form-row"><label for="minutes">Time (min)</label><input id="minutes" type="number" min="1" max="180" placeholder="e.g. 12" inputmode="numeric"></div>
+    record='''<p class="note">Only an explicitly submitted GitHub Issue records completion. Quiz answers and browser entries do not.</p>
+<div class="form-row"><label for="minutes">Time (min)</label><input id="minutes" type="number" min="1" max="180" placeholder="e.g. 12" inputmode="numeric"></div>
 <div class="form-row"><label for="difficulty">Difficulty</label><select id="difficulty"><option value="">Not rated</option><option value="1">1/5 · Easy</option><option value="2">2/5</option><option value="3">3/5</option><option value="4">4/5</option><option value="5">5/5 · Hard</option></select></div>
 <div class="form-row"><label for="note">Note</label><input id="note" type="text" maxlength="120" placeholder="Optional"></div>
-<div class="buttons"><button class="btn btn-main" id="mark-complete" disabled>Mark complete</button><button class="btn" id="copy-record" disabled>Copy record</button><button class="btn" id="download-record" disabled>Download PROGRESS.md</button></div>
-<div class="buttons"><button class="btn" id="reset-practice">Reset practice</button></div>
-<p id="status" class="status" aria-live="polite">Answer all questions to unlock completion.</p>
-<div class="manual" id="manual-box" hidden><label for="manual-text">Select and copy the record:</label><textarea id="manual-text" readonly></textarea></div>
-<p class="note">Saved only in this browser. Export the Markdown record or report completion in ChatGPT. This does not directly write back to the hosted GitHub file.</p>'''
+<div class="buttons"><button class="btn btn-main" id="submit-feedback" disabled>Submit completion via GitHub Issue ↗</button><button class="btn" id="reset-practice">Reset practice</button></div>
+<p id="status" class="status" aria-live="polite">Complete the practice questions before submitting.</p>
+<p class="note">Sign in to GitHub and click <strong>Submit new issue</strong>. The feedback automation updates PROGRESS.md. No copying into ChatGPT.</p>'''
     compare_panel=panel('04 / HISTORICAL MORPHOLOGY','PIE → Celtic → Old Irish',f'<p class="historical-intro">Extended analysis of inheritance, sound change, analogy and innovations · optional 5–8 minutes</p><details open><summary>Historical analysis and sources (tap to collapse)</summary><div class="inside content">{comparison}</div></details><p class="historical-guide"><a href="../history.html">Read the comparative morphology guide →</a></p>','comparison','historical') if comparison else ''
     body=f'''<section class="hero" aria-labelledby="title"><div>
 <div class="kicker">{e(data['category'])} · STIFTER §{e(data['stifter'])}</div>
@@ -110,8 +109,8 @@ def render_lesson(entry:Entry, data):
 <div class="meta"><span class="pill">{e(data.get('minutes',12))} minutes</span><span class="pill">{len(data['questions'])} questions</span><span class="pill">Scheduled {entry.date_jst}</span></div>
 </div><div class="hero-word" aria-hidden="true">{e(word)}</div></section>
 <div class="layout"><div>
-{panel('01 / FORMS','Paradigm or text','<div class="tablebar"><button class="btn" id="toggle-forms" type="button" aria-pressed="false">Hide forms for recall</button></div><div class="content">'+main_section+'</div>','paradigm')}
-{panel('02 / FOCUS','One point','<div class="callout content">'+point+'</div>','notice')}
+{panel('01 / FORMS','Forms and patterns','<div class="tablebar"><button class="btn" id="toggle-forms" type="button" aria-pressed="false">Hide forms for recall</button></div><div class="content">'+main_section+'</div>','paradigm')}
+{panel('02 / FOCUS','The rule, clearly','<div class="callout content">'+point+'</div>','notice')}
 {compare_panel}
 </div><div>
 {panel('03 / PRACTICE','Check yourself',practice,'practice')}
@@ -143,7 +142,7 @@ def render_index(entries, available):
 <section class="panel"><div class="panelhead"><span class="index">DEEPER HISTORICAL MORPHOLOGY</span></div><h2>PIE → Celtic → Old Irish</h2>
 <p>Each lesson includes a new extended historical analysis: inherited paradigms, phonological developments, analogical changes, and competing reconstructions.</p>
 <a class="btn" href="history.html" style="text-decoration:none">Read the comparative guide →</a></section>
-<footer class="foot"><p>Each completed lesson stores a session record in your browser, exportable as Markdown. The website itself has no access to your private ChatGPT messages or local files.</p></footer>
+<footer class="foot"><p>Completion is recorded by explicitly submitting a GitHub Issue from the lesson page.</p></footer>
 <script>const start=Date.UTC(2026,9,10);let s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());let p=s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!p){let a=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());let ob=Object.fromEntries(a.map(v=>[v.type,v.value]));p=[0,ob.year,ob.month,ob.day]};let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;if(idx>28)idx=28;document.getElementById('today-heading').textContent='Day '+String(idx).padStart(3,'0');document.getElementById('today-link').href='days/'+String(idx).padStart(3,'0')+'.html';document.querySelector('tr[data-day="'+idx+'"]').classList.add('today-row');document.getElementById('today-label').textContent=s+' JST';</script>'''
     return shell('Daily Old Irish',body)
 
