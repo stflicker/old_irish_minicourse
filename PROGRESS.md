@@ -9,7 +9,7 @@ The scheduled daily job adds a row once its date arrives. `published` means the 
 | OI-D003 | 2026-10-25 | completed | 11 | 3 | — |
 | OI-D004 | 2026-10-25 | completed | 15 | 3 | — |
 | OI-D005 | 2026-10-25 | completed | 10 | 2 | — |
-| OI-D006 | 2026-10-15 | published | — | — | — |
+| OI-D006 | 2026-10-25 | completed | 10 | 3 | — |
 | OI-D007 | 2026-10-16 | published | — | — | — |
 | OI-D008 | 2026-10-17 | published | — | — | — |
 | OI-D009 | 2026-10-18 | published | — | — | — |
