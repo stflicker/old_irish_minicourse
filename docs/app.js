@@ -2,6 +2,57 @@
 (() => {
   'use strict';
   const payload = document.getElementById('lesson-data');
+  // Revised v0.7: each form cell is an independent accessible recall control.
+  const panel=$('paradigm');
+  if(panel && panel.querySelector('[data-recall]')){
+    const cells=[...panel.querySelectorAll('[data-recall]')];
+    const groups=[...panel.querySelectorAll('[data-table-toggle]')];
+    function hide(cell,hidden){
+      cell.classList.toggle('is-hidden',hidden);
+      cell.setAttribute('aria-pressed',String(hidden));
+      const answer=cell.querySelector('.form-answer');
+      if(answer)answer.setAttribute('aria-hidden',String(hidden));
+      const label=cell.closest('[data-cell-label]')?.dataset.cellLabel||'form';
+      if(hidden)cell.setAttribute('aria-label','Reveal '+label);
+      else cell.removeAttribute('aria-label');
+    }
+    function repaint(){
+      const all=cells.every(x=>x.classList.contains('is-hidden'));
+      const count=cells.filter(x=>x.classList.contains('is-hidden')).length;
+      const button=$('toggle-forms');button.textContent=all?'Show all forms':'Hide all forms';
+      button.disabled=false;button.setAttribute('aria-pressed',String(all));
+      if($('recall-count'))$('recall-count').textContent=count+' / '+cells.length+' forms hidden';
+      groups.forEach(b=>{
+        const sub=[...document.getElementById(b.dataset.tableToggle).querySelectorAll('[data-recall]')];
+        const concealed=sub.every(x=>x.classList.contains('is-hidden'));
+        b.textContent=concealed?'Show this table':'Hide this table';
+        b.disabled=false;b.setAttribute('aria-pressed',String(concealed));
+      });
+    }
+    cells.forEach(x=>x.addEventListener('click',()=>{hide(x,!x.classList.contains('is-hidden'));repaint()}));
+    $('toggle-forms').addEventListener('click',()=>{
+      const next=!cells.every(x=>x.classList.contains('is-hidden'));
+      cells.forEach(x=>hide(x,next));repaint();
+    });
+    groups.forEach(b=>b.addEventListener('click',()=>{
+      const sub=[...document.getElementById(b.dataset.tableToggle).querySelectorAll('[data-recall]')];
+      const next=!sub.every(x=>x.classList.contains('is-hidden'));
+      sub.forEach(x=>hide(x,next));repaint();
+    }));
+    const effects=$('toggle-effects');
+    if(effects){effects.disabled=false;effects.addEventListener('click',()=>{
+      const hidden=panel.classList.toggle('effects-hidden');
+      effects.textContent=hidden?'Show effect clues':'Hide effect clues';
+      effects.setAttribute('aria-pressed',String(hidden));
+      panel.querySelectorAll('.effect-badge').forEach(b=>{
+        b.setAttribute('aria-hidden',String(hidden));
+        if(!b.dataset.effectTitle)b.dataset.effectTitle=b.title;
+        b.title=hidden?'':b.dataset.effectTitle;
+      });
+    });}
+    repaint();
+  }
+
   if (!payload) return;
   const {id, questions} = JSON.parse(payload.textContent);
   const key = 'sengoidelc:v3:' + id;
@@ -62,11 +113,7 @@
     if(isCorrect){state.solved[i]=true;persist();paint();}
     else{fb.textContent='Not quite — try again.';fb.classList.add('bad');}
   }));
-  $('toggle-forms').addEventListener('click',()=>{
-    const hidden=$('paradigm').classList.toggle('forms-hidden');
-    $('toggle-forms').textContent=hidden?'Show forms':'Hide forms for recall';
-    $('toggle-forms').setAttribute('aria-pressed',String(hidden));
-  });
+  if(!$('paradigm').querySelector('[data-recall]')) $('toggle-forms').addEventListener('click',()=>{$('paradigm').classList.toggle('forms-hidden')});
   ['minutes','difficulty','note'].forEach(x => $(x).addEventListener('input',()=>{state[x]=$(x).value;persist();}));
   // Compatibility with previously generated HTML until Pages is rebuilt.
   if(!$('submit-feedback')){
