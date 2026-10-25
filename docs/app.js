@@ -68,6 +68,13 @@
     $('toggle-forms').setAttribute('aria-pressed',String(hidden));
   });
   ['minutes','difficulty','note'].forEach(x => $(x).addEventListener('input',()=>{state[x]=$(x).value;persist();}));
+  // Compatibility with previously generated HTML until Pages is rebuilt.
+  if(!$('submit-feedback')){
+    ['mark-complete','copy-record','download-record','manual-box'].forEach(k=>{const el=$(k);if(el)el.hidden=true;});
+    const oldNote=document.querySelector('#record .note');if(oldNote)oldNote.textContent='Completion is recorded only through the submitted GitHub Issue, never by copying back into ChatGPT.';
+    const button=document.createElement('button');button.type='button';button.id='submit-feedback';button.className='btn btn-main';button.textContent='Submit completion via GitHub Issue ↗';
+    $('reset-practice').parentElement.prepend(button);
+  }
   $('submit-feedback').addEventListener('click',()=>{
     if(!state.solved.every(Boolean))return;
     window.open(feedbackURL(),'_blank','noopener,noreferrer');
