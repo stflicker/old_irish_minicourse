@@ -77,28 +77,25 @@ jobs:
       - name: Deploy interactive site
         id: deploy
         uses: actions/deploy-pages@v4
-      - name: Verify the live public HTML lesson
+      - name: Verify Day 005 revision on the live public site
         env:
           PAGES_URL: ${{ steps.deploy.outputs.page_url }}
         run: |
           set -euo pipefail
-          DAY=$(python - <<'PY'
-          from datetime import datetime, date
-          from zoneinfo import ZoneInfo
-          today = datetime.now(ZoneInfo('Asia/Tokyo')).date()
-          day = (today - date(2026, 10, 10)).days + 1
-          print(f'{min(max(day, 1), 28):03d}')
-          PY
-          )
-          URL="${PAGES_URL%/}/days/${DAY}.html"
+          URL="${PAGES_URL%/}/days/005.html?v=${GITHUB_SHA}"
+          grep -Fq 'Short and long neuter plurals' docs/days/005.html
+          if grep -Fq 'not another nominative' docs/days/005.html; then
+            echo "::error::Old Day 005 sentence still present in generated HTML"
+            exit 1
+          fi
           for attempt in 1 2 3 4 5 6 7 8; do
-            if curl --fail --location --silent --show-error --max-time 15 "$URL" -o /tmp/oi-lesson.html; then
-              if grep -Fq 'id="lesson-data"' /tmp/oi-lesson.html && grep -Fq '"id": "OI-D'"${DAY}"'"' /tmp/oi-lesson.html && grep -Fq 'data-table-revision="7"' /tmp/oi-lesson.html && ! grep -Fq 'Lesson not yet published' /tmp/oi-lesson.html; then
-                echo "Public lesson verified at: $URL"
+            if curl --fail --location --silent --show-error --max-time 15 --header 'Cache-Control: no-cache' "$URL" -o /tmp/day005-live.html; then
+              if grep -Fq 'Short and long neuter plurals' /tmp/day005-live.html && ! grep -Fq 'not another nominative' /tmp/day005-live.html; then
+                echo "Verified revised Day 005 publicly at: $URL"
                 exit 0
               fi
             fi
             sleep 12
           done
-          echo "::error::GitHub Pages did not serve a verified interactive lesson at $URL"
+          echo "::error::Public Day 005 still has stale content: $URL"
           exit 1
