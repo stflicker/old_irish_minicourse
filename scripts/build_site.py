@@ -15,6 +15,7 @@ import sys
 import mistune
 import yaml
 from course import Entry, read_curriculum, START_JST
+from table_tools import polish_page
 
 ROOT=Path(__file__).resolve().parents[1]
 PAGES=ROOT/'docs'/'days'
@@ -58,6 +59,12 @@ def shell(title,body,day: int|None=None):
 </head><body><header class="topbar"><span class="brand"><a href="{home}">SENGOÍDELC · OLD IRISH</a></span>
 <span class="minor">{day_label}</span></header><main><noscript>JavaScript is disabled. The text and paradigm are available, but quizzes and local saving require a normal browser.</noscript>
 {body}</main></body></html>'''
+
+
+_plain_shell = shell
+
+def shell(title, body, day=None):
+    return polish_page(_plain_shell(title, body, day))
 
 
 def lesson_link(idx):return f'{idx:03d}.html'
