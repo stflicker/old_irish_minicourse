@@ -1,6 +1,7 @@
 /* Interactive daily lesson; no external scripts or backend. */
 (() => {
   'use strict';
+  const $ = x => document.getElementById(x);
   const payload = document.getElementById('lesson-data');
   // Revised v0.7: each form cell is an independent accessible recall control.
   const panel=$('paradigm');
@@ -59,7 +60,7 @@
   const empty = () => ({solved: [], minutes:'', difficulty:'', note:''});
   let state = empty();
   let storageAvailable = true;
-  const $ = x => document.getElementById(x);
+
   try {
     const prior = localStorage.getItem(key);
     if (prior) state = Object.assign(empty(), JSON.parse(prior));
