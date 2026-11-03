@@ -34,6 +34,32 @@ Latin *-ī* (genitive singular, e.g. *virī*) and Celtic *-ī* (attested in Ogha
 
 This is a good example of an apparently shared ending whose historical **date and status remain contested**, not a reason to abandon comparison.
 
+## Working example: why ACC PL is traditionally labelled [H]
+
+A useful comparison explains a **mechanism**, not just similar endings. The masculine thematic accusative plural is reconstructed with a final sibilant:
+
+```text
+PIE            *-ons
+pre-Proto-Celt *-ōns    (schematic prehistoric stage)
+Proto-Celtic  *-ūs
+Old Irish       -u      (e.g. echu 'horses', accusative plural)
+```
+
+Compare **Latin equōs** (the sibilant survives) and **Sanskrit aśvān** (the nasal is reflected, final -s no longer appears). These are parallel descendants: neither was an ancestor of Old Irish. The point of citing them is to motivate **`*-ns` / `*-s`**, which Old Irish no longer writes.
+
+A proposed sandhi mechanism accounts for the *traditional* [H] label:
+
+```text
+before a vowel:      *-s # V-  >  *-h # V-  >  # hV-
+before a consonant:  *-s # C-  >  earlier geminate/non-lenited C-
+```
+
+Stifter, **“The rise of gemination in Celtic”**, §8.1 (first published 2023; revised version 2024), argues that Old Irish aspiration is clearly established for certain **proclitic particles**; aspiration after ordinary masculine/feminine **accusative-plural nouns has no direct written attestation**. It is historically plausible, but conjectural. Thus **`echu [H]` is a teaching reconstruction, not proof that Old Irish scribes recorded `echu hV-`**.
+
+The distinction to retain: an inflectional ending can disappear in the isolated form while leaving an effect across a word boundary. But phonological reconstruction, manuscript evidence, and a traditional paradigm label must not be conflated.
+
+Sources: [Stifter (2023/2024), §8.1](https://ore.eu/ore/article/view/327); [University of Texas, Old Irish Online, §6.3](https://lrc.la.utexas.edu/eieol/iriol/20); Thurneysen, *A Grammar of Old Irish*, nominal paradigms.
+
 ## 2. Vowel affection and morphological reanalysis
 
 Inflected forms such as *fer/fir/fiur*, *cenn/cinn/ciunn* or *macc/maicc* show how a following vowel could change a preceding stressed vowel or consonant **before that following vowel disappeared**. Such changes can eventually become more reliable case markers than the original endings.
