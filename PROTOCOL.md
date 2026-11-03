@@ -16,14 +16,14 @@
 4. Each new lesson must identify the Stifter section; use Thurneysen and reliable academic editions for cross-checking, plus eDIL for historical lexicon, Matasović/McCone for comparative Celtic/PIE. Mark reconstruction with `*` and distinguish book paradigm from attested text.
 5. Do not reproduce long copyrighted textbook passages; cite sections and use original short exercises or legitimate small excerpts with proper source attribution.
 
-## Historical-comparative content standard (v0.5)
+## Historical-comparative content standard (v0.7)
 
 - The daily grammatical target and 28-day order do **not** change. Each `lessons/OI-D###.md` now has a substantial **Comparison (optional)** section, opened by default in HTML.
 - The historical explanation should trace **PIE morphology → Celtic/early Irish developments → the attested Old Irish paradigm**, then name the innovation or continuity explicitly.
 - Distinguish **inherited categories** (e.g., neuter nominative–accusative identity) from **phonologically conditioned allomorphy** (raising, palatalization, apocope), **analogical substitutions** (e.g., thematic genitive `*-ī`), and **new grammaticalization** (definite article).
 - Always distinguish a **reconstructed** preform (starred), a directly **attested** form (e.g., Ogham MAQI), a **pedagogical paradigm** and a **disputed explanation**. Do not mechanically derive every Old Irish ending from a single PIE suffix.
 - Historical sections can require about **5–8 extra optional minutes** beyond the 10–15-minute active lesson. Use accessible comparative references and preserve a link to `HISTORICAL_MORPHOLOGY.md`.
-- Existing `PROGRESS.md` completion and feedback records must not be changed during historical-content revisions.
+- **Historical comparison must answer a causal question, not display parallel paradigms for their own sake.** Start with an Old Irish puzzle (e.g. why a case form marks the next word [N], [L], or [H]); identify the inherited stem/ending; give one concise, step-by-step sound-change or analogy derivation, using arrows and conditioning environments such as `*-s # V- > *-h # V- > # hV-`; state the **observable Old Irish outcome**. Include at most one or two sister-language forms as evidence for a specific missing phoneme or grammatical category, and explain what each comparison establishes. Never mistake a sister language for a chronological ancestor.\n- **Assign evidence levels** in historical notes: attested Old Irish spelling/example, widely accepted phonological reconstruction, traditional but unverified mutation attribution, or disputed proposal. If a standard paradigm's [H] is merely inferred, explicitly say it is not directly attested. Do not equate vowel-initial h-prefixation with consonant-initial gemination or non-lenition. See Day 007 and Stifter (2023/2024), “The rise of gemination in Celtic”, §8.1.\n- Prefer one focused derivation over whole Latin/Greek/Sanskrit paradigms. Comparative tables are allowed **only when every column carries explanatory work**; otherwise use a compact formula and prose.\n- Existing `PROGRESS.md` completion and feedback records must not be changed during historical-content revisions.
 
 ## Daily task, file publishing, record
 
