@@ -52,6 +52,20 @@ def make_button(soup, text, **attrs):
     return button
 
 
+def tag_old_irish(soup):
+    """Mark Old Irish word forms lang="sga" so screen readers do not read them as English.
+
+    Only unambiguous places are tagged: paradigm form cells, the big hero word, and the
+    italic headword in paradigm headings. Free prose is left alone (it mixes languages).
+    """
+    targets = soup.select('.form-answer > strong, .form-answer > em, #paradigm .content h3 em')
+    hero = soup.select_one('.hero-word')
+    if hero and not hero.get_text(strip=True).isdigit() and hero.get_text(strip=True) != 'OI':
+        targets.append(hero)
+    for tag in targets:
+        tag['lang'] = 'sga'
+
+
 def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
     """Wrap tables without changing their cell count; identify answer cells by meaning."""
     soup = BeautifulSoup(html, 'html.parser')
@@ -63,10 +77,6 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
     assets_dir = assets_dir or Path(__file__).resolve().parents[1] / 'docs'
     is_lesson = soup.select_one('#lesson-data') is not None
     prefix = '../' if is_lesson else ''
-    if not soup.find('link', attrs={'data-table-styles': True}):
-        link = soup.new_tag('link', rel='stylesheet', href=prefix+'tables.css')
-        link['data-table-styles'] = '7'
-        soup.head.append(link)
     # Version all local assets so a deployment cannot combine old CSS/JS with new HTML.
     for tag, attr in [(t,'href') for t in soup.select('link[rel="stylesheet"]')] + [(t,'src') for t in soup.select('script[src]')]:
         value = tag.get(attr,'').split('?')[0]
@@ -168,4 +178,6 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
             controls.append(make_button(soup,'Hide this table',**{'class':'btn btn-quiet','data-table-toggle':table_id,
                             'aria-controls':table_id,'aria-pressed':'false','disabled':''}))
             wrapper.insert_before(controls)
+    tag_old_irish(soup)
     return str(soup)
+

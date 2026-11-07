@@ -13,7 +13,6 @@ on:
       - 'lessons/**'
       - 'scripts/**'
       - 'docs/style.css'
-      - 'docs/tables.css'
       - 'docs/app.js'
       - 'docs/index.html'
       - '.github/workflows/daily-publish.yml'
