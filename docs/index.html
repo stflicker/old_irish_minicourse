@@ -11,7 +11,7 @@
 <div aria-hidden="true" class="hero-word">OI</div></section>
 <section class="panel"><div class="panelhead"><span class="index">TODAY'S STUDY</span><span class="minute" id="today-label">Asia/Tokyo</span></div>
 <h2 id="today-heading">Find today's lesson</h2><p class="aside" id="today-explainer">The date in Japan selects the next scheduled topic, not your completion state.</p>
-<div class="buttons"><a class="btn btn-main" href="days/001.html" id="today-link" style="text-decoration:none">Open scheduled day</a><a class="btn" href="days/001.html" style="text-decoration:none">Try Day 001 demo</a></div>
+<div class="buttons"><a class="btn btn-main" href="days/001.html" id="today-link" style="text-decoration:none">Open scheduled day</a><a class="btn" href="days/001.html" style="text-decoration:none">Try Day 001 demo</a><button class="btn" hidden="" id="review-again" type="button">Another review day</button></div>
 </section>
 <section class="panel index-list"><div class="panelhead"><span class="index">CURRICULUM FROM FIRST_28_DAYS.MD</span></div><h2>Lessons</h2>
 <div aria-label="Lessons" class="table-scroll" role="region" tabindex="0"><table class="study-table reference-table" data-form-columns="" id="study-table-1"><caption class="sr-only">Lessons</caption><thead><tr><th scope="col">Day</th><th scope="col">Japan date</th><th scope="col">Stifter</th><th scope="col">Focus</th><th scope="col">Content</th></tr></thead><tbody><tr data-day="1"><th class="row-label" scope="row"><a href="days/001.html">001</a></th><td>2026-10-10</td><td>§6.4, p. 43</td><td><p>ech: singular and nom./acc. syncretism</p>
@@ -47,4 +47,17 @@
 <p>Each lesson includes a new extended historical analysis: inherited paradigms, phonological developments, analogical changes, and competing reconstructions.</p>
 <a class="btn" href="history.html" style="text-decoration:none">Read the comparative guide →</a></section>
 <footer class="foot"><p>Completion is recorded by explicitly submitting a GitHub Issue from the lesson page.</p></footer>
-<script>const start=Date.UTC(2026,9,10);let s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());let p=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(!p){let a=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());let ob=Object.fromEntries(a.map(v=>[v.type,v.value]));p=[0,ob.year,ob.month,ob.day]};let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;if(idx>28)idx=28;document.getElementById('today-heading').textContent='Day '+String(idx).padStart(3,'0');document.getElementById('today-link').href='days/'+String(idx).padStart(3,'0')+'.html';document.querySelector('tr[data-day="'+idx+'"]').classList.add('today-row');document.getElementById('today-label').textContent=s+' JST';</script></main></body></html>
+<script>(()=>{const READY=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],start=Date.UTC(2026,9,10),pad=n=>String(n).padStart(3,'0'),$=id=>document.getElementById(id);
+const s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const p=s.match(/(\d{4})-(\d{2})-(\d{2})/);if(!p)return;
+let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;
+$('today-label').textContent=s+' JST';
+const show=(day,review)=>{$('today-heading').textContent=(review?'Review · Day ':'Day ')+pad(day);$('today-link').href='days/'+pad(day)+'.html';$('today-link').textContent=review?'Open review lesson':'Open scheduled day';};
+if(READY.includes(idx)){show(idx,false);const row=document.querySelector('tr[data-day="'+idx+'"]');if(row)row.classList.add('today-row');return;}
+const pool=READY.filter(d=>d<idx);if(!pool.length){show(1,false);return;}
+const note=$('today-explainer'),again=$('review-again');
+const label=d=>'Day '+pad(d);
+const pick=Math.imul(idx,2654435761)>>>0;let cur=pool[pick%pool.length];
+const paint=()=>{show(cur,true);note.textContent='No new lesson is scheduled for today'+(idx<=28?' (Day '+pad(idx)+' is not authored yet)':' (the 28-day plan is finished)')+'. Today\u2019s review is '+label(cur)+', picked at random from earlier lessons.';};
+paint();if(again){again.hidden=pool.length<2;again.addEventListener('click',()=>{let n;do{n=pool[Math.floor(Math.random()*pool.length)]}while(n===cur);cur=n;paint();});}
+})();</script></main></body></html>

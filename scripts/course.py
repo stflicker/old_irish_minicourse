@@ -64,3 +64,15 @@ def entry_for_date(curriculum: list[Entry], now: date) -> Entry | None:
     if 1 <= number <= len(curriculum):
         return curriculum[number-1]
     return None
+
+
+def review_day(number: int, ready: list[int]) -> int | None:
+    """Pick which earlier lesson to review when day `number` has no lesson.
+
+    Deterministic per day number (same date -> same pick) and identical to the
+    JavaScript on docs/index.html: floor(imul(number, 2654435761) mod 2^32) % n.
+    """
+    pool = sorted(d for d in ready if d < number)
+    if not pool:
+        return None
+    return pool[(number * 2654435761 & 0xFFFFFFFF) % len(pool)]

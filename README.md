@@ -4,7 +4,7 @@
 **First scheduled lesson:** 10 October 2026, Japan time  
 **Daily workload:** about 10–15 minutes
 
-A small Markdown-led course with an interactive static HTML reader, an automatic **daily publication log**, and an optional ChatGPT notification. The learner has already studied the alphabet, phonology, orthography, mutations, and basic morphological terminology; the course begins at §6.4, with paradigms.
+A small Markdown-led course with an interactive static HTML reader, an automatic **daily publication log**. The learner has already studied the alphabet, phonology, orthography, mutations, and basic morphological terminology; the course begins at §6.4, with paradigms.
 
 ## Start here
 
@@ -37,9 +37,9 @@ Every daily lesson now offers an **expanded, open-by-default historical morpholo
 ## Important limits
 
 - **All Days 001–028 have authored interactive Markdown lessons and generated HTML pages.** The historical morphology track has been expanded in each lesson. Structural build checks do not replace manual philological review; examples and reconstructions are cited and must be interpreted with their stated evidentiary limits.
-- After GitHub repository creation, Pages Actions configuration, and a successful test run, `PROGRESS.md` **will gain a daily row**, either `published` or `awaiting_content`.
-- To deliver a new substantive HTML lesson each day, a lesson Markdown file must first be written and committed. The ChatGPT daily task can be instructed to do that via a **connected GitHub account**, subject to available app actions/approval. The GitHub connection exists, but writing to a course repository from a scheduled task has not yet been tested.
-- Quiz answers may be saved locally, but only the **GitHub Issue submission** records completion, minutes, difficulty and notes through the feedback workflow. No copying into ChatGPT is required. Learner completion is recorded only after explicitly submitting the GitHub feedback Issue; the feedback workflow processes the record.
-- A ChatGPT scheduled task created in a Project does **not** have access to Project-uploaded files. Hosting the canonical syllabus in GitHub, and instructing the task to read that repository, avoids relying on Project attachments being available during a scheduled run.
+- `PROGRESS.md` gains one row per scheduled day, either `published` or `awaiting_content` (written by the daily workflow); a row becomes `completed` only after you submit the feedback Issue.
+- A new lesson needs a Markdown file in `lessons/` first (see `LESSON_TEMPLATE.md` and `PROTOCOL.md`). The workflow never invents grammar to fill a day.
+- **After the last authored day (or on any day with no lesson), the home page offers a review of a randomly chosen earlier lesson**, stable for that Japan date, with an *Another review day* button. `daily_publish.py` prints the same pick; review days add no `PROGRESS.md` row.
+- Quiz answers are kept in the browser only. Completion, minutes, difficulty and notes are recorded only when you submit the GitHub feedback Issue; the feedback workflow processes it.
 
 There is **no paid API key** in this package and **no continuously running server**. GitHub Pages serves the static site; GitHub Actions performs the once-daily file update.

@@ -142,7 +142,7 @@ def render_index(entries, available):
 <div class="hero-word" aria-hidden="true">OI</div></section>
 <section class="panel"><div class="panelhead"><span class="index">TODAY'S STUDY</span><span id="today-label" class="minute">Asia/Tokyo</span></div>
 <h2 id="today-heading">Find today's lesson</h2><p id="today-explainer" class="aside">The date in Japan selects the next scheduled topic, not your completion state.</p>
-<div class="buttons"><a class="btn btn-main" id="today-link" href="days/001.html" style="text-decoration:none">Open scheduled day</a><a class="btn" href="days/001.html" style="text-decoration:none">Try Day 001 demo</a></div>
+<div class="buttons"><a class="btn btn-main" id="today-link" href="days/001.html" style="text-decoration:none">Open scheduled day</a><a class="btn" href="days/001.html" style="text-decoration:none">Try Day 001 demo</a><button class="btn" type="button" id="review-again" hidden>Another review day</button></div>
 </section>
 <section class="panel index-list"><div class="panelhead"><span class="index">CURRICULUM FROM FIRST_28_DAYS.MD</span></div><h2>Lessons</h2>
 <table class="plan-table"><thead><tr><th>Day</th><th>Japan date</th><th>Stifter</th><th>Focus</th><th>Content</th></tr></thead><tbody>'''+''.join(trs)+'''</tbody></table><p class="legend">The topic list is built from <code>FIRST_28_DAYS.md</code>. 'Not authored' means the interactive grammar lesson has not been verified and published yet.</p></section>
@@ -150,8 +150,21 @@ def render_index(entries, available):
 <p>Each lesson includes a new extended historical analysis: inherited paradigms, phonological developments, analogical changes, and competing reconstructions.</p>
 <a class="btn" href="history.html" style="text-decoration:none">Read the comparative guide →</a></section>
 <footer class="foot"><p>Completion is recorded by explicitly submitting a GitHub Issue from the lesson page.</p></footer>
-<script>const start=Date.UTC(2026,9,10);let s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());let p=s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!p){let a=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());let ob=Object.fromEntries(a.map(v=>[v.type,v.value]));p=[0,ob.year,ob.month,ob.day]};let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;if(idx>28)idx=28;document.getElementById('today-heading').textContent='Day '+String(idx).padStart(3,'0');document.getElementById('today-link').href='days/'+String(idx).padStart(3,'0')+'.html';document.querySelector('tr[data-day="'+idx+'"]').classList.add('today-row');document.getElementById('today-label').textContent=s+' JST';</script>'''
-    return shell('Daily Old Irish',body)
+<script>(()=>{const READY=__READY__,start=Date.UTC(2026,9,10),pad=n=>String(n).padStart(3,'0'),$=id=>document.getElementById(id);
+const s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const p=s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!p)return;
+let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;
+$('today-label').textContent=s+' JST';
+const show=(day,review)=>{$('today-heading').textContent=(review?'Review · Day ':'Day ')+pad(day);$('today-link').href='days/'+pad(day)+'.html';$('today-link').textContent=review?'Open review lesson':'Open scheduled day';};
+if(READY.includes(idx)){show(idx,false);const row=document.querySelector('tr[data-day="'+idx+'"]');if(row)row.classList.add('today-row');return;}
+const pool=READY.filter(d=>d<idx);if(!pool.length){show(1,false);return;}
+const note=$('today-explainer'),again=$('review-again');
+const label=d=>'Day '+pad(d);
+const pick=Math.imul(idx,2654435761)>>>0;let cur=pool[pick%pool.length];
+const paint=()=>{show(cur,true);note.textContent='No new lesson is scheduled for today'+(idx<=28?' (Day '+pad(idx)+' is not authored yet)':' (the 28-day plan is finished)')+'. Today\\u2019s review is '+label(cur)+', picked at random from earlier lessons.';};
+paint();if(again){again.hidden=pool.length<2;again.addEventListener('click',()=>{let n;do{n=pool[Math.floor(Math.random()*pool.length)]}while(n===cur);cur=n;paint();});}
+})();</script>'''
+    return shell('Daily Old Irish',body.replace('__READY__',json.dumps(sorted(available))))
 
 
 def main():

@@ -9,18 +9,29 @@ from datetime import date
 from pathlib import Path
 import sys
 
-from course import entry_for_date, read_curriculum, today_jst
+from course import START_JST, entry_for_date, read_curriculum, review_day, today_jst
 
 COLUMNS = '| Lesson | Date (JST) | Status | Minutes | Difficulty / 5 | Note |\n|---|---|---|---:|---:|---|'
+
+
+def _review_message(entries, lessons, number: int) -> str:
+    ready = [x.day for x in entries if (lessons / f'{x.lesson_id}.md').is_file()]
+    pick = review_day(number, ready)
+    if pick is None:
+        return 'No lesson scheduled and nothing earlier to review; no row added.'
+    return f'No new lesson for day {number:03d}: review OI-D{pick:03d} (no PROGRESS row added).'
 
 
 def update(progress: Path, curriculum: Path, lessons: Path, now: date) -> tuple[str, bool]:
     entries = read_curriculum(curriculum)
     e = entry_for_date(entries, now)
     if not e:
-        return 'Not in 001..028: no row added; extend syllabus before scheduling further.', False
+        return _review_message(entries, lessons, (now - START_JST).days + 1), False
 
     exists = (lessons / f'{e.lesson_id}.md').is_file()
+    if not exists:
+        # Nothing new to teach today: report the review day the site will show.
+        print(_review_message(entries, lessons, e.day))
     new_status = 'published' if exists else 'awaiting_content'
     lines = progress.read_text(encoding='utf-8').splitlines() if progress.exists() else [
         '# Progress', '',
