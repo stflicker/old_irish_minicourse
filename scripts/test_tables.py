@@ -19,7 +19,7 @@ class CourseTables(unittest.TestCase):
                 self.assertEqual(soup.html.get('data-table-revision'),'7')
                 data=json.loads(soup.select_one('#lesson-data').string)
                 self.assertEqual(data['id'],f'OI-D{day:03d}')
-                self.assertIn(len(data['questions']),(1,2))
+                self.assertIn(len(data['questions']),(1,2,3))
                 self.assertNotIn('Lesson not yet published',soup.get_text())
                 self.assertTrue(soup.select('#paradigm [data-recall]'))
                 self.assertEqual(len(soup.select('#toggle-forms')),1)

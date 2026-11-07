@@ -1,6 +1,6 @@
 ---
 document: starting-queue
-version: 0.2.0
+version: 0.3.0
 status: agreed
 source_edition: "Stifter 2006"
 ---
@@ -8,18 +8,20 @@ source_edition: "Stifter 2006"
 # First 28 study days
 
 > **Agreed starting sequence.** These are our micro-lesson targets, not the textbook’s own day divisions. The daily push sends one planned target per date; the learner’s *completed* sessions are tracked separately. Difficult items may be revisited without changing the 28-row topic order.
+>
+> *v0.3: the wording of Days 001–007 was revised with the learner's approval when those lessons were rewritten as “historical cards”; Stifter sections are unchanged.*
 
 ## Week 1 | Masculine and neuter o-stems
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| **001** | 6.4, p. 43 | *ech*: singular and nom./acc. syncretism | N |
-| 002 | 6.4 | *ech*: plural, especially nom. vs acc. | N |
-| 003 | 6.5 | *fer*: root raising/lowering in selected forms | N |
-| 004 | 6.6 | Neuter o-stems: singular contrast | N |
-| 005 | 6.6 | Neuter o-stems: plural and nom.-acc. identity | N |
-| 006 | 6.7-6.8 | Two short declension checks; one variant if relevant | T / N |
-| 007 | 6.4-6.6 | Latin/Sanskrit thematic morphology vs Old Irish o-stems | H |
+| **001** | 6.4, p. 43 | *ech*: the singular; lost endings leave L/N/H on the next word | N |
+| 002 | 6.4 | *ech*: the plural; two *eich*; where [H] comes from | N |
+| 003 | 6.5 | *fer*: the ending vowel decides the root vowel | N |
+| 004 | 6.6 | *cenn*: neuter singular; why the neuter nominative nasalizes | N |
+| 005 | 6.6 | *cenn*: short (inherited) and long (added) neuter plural | N |
+| 006 | 6.7-6.8 | Reading o-stem forms: homonyms; long words and syncope | T / N |
+| 007 | 6.4-6.6 | o-stems across Indo-European: inherited vs replaced endings | H |
 
 ## Week 2 | Articles, adjectives, first weak presents
 
