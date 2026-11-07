@@ -54,7 +54,7 @@ def shell(title,body,day: int|None=None):
     home='../index.html' if day else 'index.html'
     return f'''<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light"><meta name="theme-color" content="#153d33">
+<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#153d33">
 <title>{e(title)}{suffix} · Sengoídelc</title><link rel="stylesheet" href="{css}">
 </head><body><header class="topbar"><span class="brand"><a href="{home}">SENGOÍDELC · OLD IRISH</a></span>
 <span class="minor">{day_label}</span></header><main><noscript>JavaScript is disabled. The text and paradigm are available, but quizzes and local saving require a normal browser.</noscript>
@@ -129,19 +129,30 @@ def render_lesson(entry:Entry, data):
     return shell(title,body,entry.day)
 
 
+def completed_lessons(path: Path) -> list[str]:
+    """Lesson ids whose PROGRESS.md row has status `completed` (submitted via the feedback Issue)."""
+    if not path.is_file(): return []
+    done=[]
+    for line in path.read_text(encoding='utf-8').splitlines():
+        cells=[c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cells)>=3 and re.fullmatch(r'OI-D\d{3}',cells[0]) and cells[2]=='completed': done.append(cells[0])
+    return done
+
+
 def render_index(entries, available):
     trs=[]
     for x in entries:
         status='Ready' if x.day in available else 'Not authored'
         flag='badge-due' if x.day in available else 'badge-wait'
         target=MARKDOWN(x.target)
-        trs.append(f'<tr data-day="{x.day}"><td><a href="days/{x.day:03d}.html">{x.day:03d}</a></td><td>{e(x.date_jst)}</td><td>§{e(x.book)}</td><td>{target}</td><td class="{flag}">{status}</td></tr>')
+        trs.append(f'<tr data-day="{x.day}"><td><a href="days/{x.day:03d}.html">{x.day:03d}</a></td><td>{e(x.date_jst)}</td><td>§{e(x.book)}</td><td>{target}</td><td class="{flag}">{status}<span class="progress-tag" data-lesson="{x.lesson_id}"></span></td></tr>')
     body='''<section class="hero"><div><div class="kicker">CURRICULUM · FIRST 28 DAYS</div><h1>Old Irish, a little every day</h1>
 <p class="lead">Paradigms, short exercises, and occasional Celtic/Indo-European comparisons.</p>
 <div class="meta"><span class="pill">Stifter (2006)</span><span class="pill">10–15 minutes/day</span><span class="pill">Daily from 10 Oct 2026</span></div></div>
 <div class="hero-word" aria-hidden="true">OI</div></section>
 <section class="panel"><div class="panelhead"><span class="index">TODAY'S STUDY</span><span id="today-label" class="minute">Asia/Tokyo</span></div>
 <h2 id="today-heading">Find today's lesson</h2><p id="today-explainer" class="aside">The date in Japan selects the next scheduled topic, not your completion state.</p>
+<p class="small" id="progress-summary" aria-live="polite"></p>
 <div class="buttons"><a class="btn btn-main" id="today-link" href="days/001.html" style="text-decoration:none">Open scheduled day</a><a class="btn" href="days/001.html" style="text-decoration:none">Try Day 001 demo</a><button class="btn" type="button" id="review-again" hidden>Another review day</button></div>
 </section>
 <section class="panel index-list"><div class="panelhead"><span class="index">CURRICULUM FROM FIRST_28_DAYS.MD</span></div><h2>Lessons</h2>
@@ -150,11 +161,18 @@ def render_index(entries, available):
 <p>Each lesson includes a new extended historical analysis: inherited paradigms, phonological developments, analogical changes, and competing reconstructions.</p>
 <a class="btn" href="history.html" style="text-decoration:none">Read the comparative guide →</a></section>
 <footer class="foot"><p>Completion is recorded by explicitly submitting a GitHub Issue from the lesson page.</p></footer>
-<script>(()=>{const READY=__READY__,start=Date.UTC(2026,9,10),pad=n=>String(n).padStart(3,'0'),$=id=>document.getElementById(id);
+<script>(()=>{const READY=__READY__,DONE=__DONE__,start=Date.UTC(2026,9,10),pad=n=>String(n).padStart(3,'0'),$=id=>document.getElementById(id);
 const s=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const p=s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!p)return;
 let idx=Math.floor((Date.UTC(+p[1],+p[2]-1,+p[3])-start)/864e5)+1;if(idx<1)idx=1;
 $('today-label').textContent=s+' JST';
+let local=0;const recorded=new Set(DONE);
+document.querySelectorAll('.progress-tag').forEach(el=>{const id=el.dataset.lesson;let quiz=false;
+try{const v=JSON.parse(localStorage.getItem('sengoidelc:v3:'+id)||'null');quiz=!!(v&&v.solved&&v.solved.length&&v.solved.every(Boolean));}catch(_e){}
+if(quiz)local++;
+if(recorded.has(id)){el.textContent='\\u2713 recorded';}
+else if(quiz){el.textContent='quiz done here';el.classList.add('local');}});
+$('progress-summary').textContent='Recorded via GitHub: '+recorded.size+' / '+READY.length+' \\u00b7 quiz finished in this browser: '+local+' / '+READY.length;
 const show=(day,review)=>{$('today-heading').textContent=(review?'Review · Day ':'Day ')+pad(day);$('today-link').href='days/'+pad(day)+'.html';$('today-link').textContent=review?'Open review lesson':'Open scheduled day';};
 if(READY.includes(idx)){show(idx,false);const row=document.querySelector('tr[data-day="'+idx+'"]');if(row)row.classList.add('today-row');return;}
 const pool=READY.filter(d=>d<idx);if(!pool.length){show(1,false);return;}
@@ -164,7 +182,7 @@ const pick=Math.imul(idx,2654435761)>>>0;let cur=pool[pick%pool.length];
 const paint=()=>{show(cur,true);note.textContent='No new lesson is scheduled for today'+(idx<=28?' (Day '+pad(idx)+' is not authored yet)':' (the 28-day plan is finished)')+'. Today\\u2019s review is '+label(cur)+', picked at random from earlier lessons.';};
 paint();if(again){again.hidden=pool.length<2;again.addEventListener('click',()=>{let n;do{n=pool[Math.floor(Math.random()*pool.length)]}while(n===cur);cur=n;paint();});}
 })();</script>'''
-    return shell('Daily Old Irish',body.replace('__READY__',json.dumps(sorted(available))))
+    return shell('Daily Old Irish',body.replace('__READY__',json.dumps(sorted(available))).replace('__DONE__',json.dumps(completed_lessons(ROOT/'PROGRESS.md'))))
 
 
 def main():

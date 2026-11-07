@@ -55,6 +55,13 @@
   }
 
   if (!payload) return;
+  // Shuffle each question's options for this visit; data-option stays tied to the answer key.
+  document.querySelectorAll('.options').forEach(box=>{
+    const items=[...box.children];
+    for(let k=items.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[items[k],items[j]]=[items[j],items[k]];}
+    items.forEach(el=>box.appendChild(el));
+  });
+  const misses={};
   const {id, questions} = JSON.parse(payload.textContent);
   const key = 'sengoidelc:v3:' + id;
   const empty = () => ({solved: [], minutes:'', difficulty:'', note:''});
@@ -98,7 +105,7 @@
         fb.textContent=q.explanation || 'Correct.';
       }
       document.querySelectorAll('.option[data-question="'+i+'"]').forEach(btn=>{
-        btn.disabled=state.solved[i];
+        btn.disabled=state.solved[i]||btn.classList.contains('wrong');
         btn.setAttribute('aria-pressed',String(state.solved[i] && Number(btn.dataset.option)===Number(q.correct)));
       });
     });
@@ -112,7 +119,13 @@
     const isCorrect=Number(btn.dataset.option)===Number(questions[i].correct);
     const fb=$('feedback-'+i);
     if(isCorrect){state.solved[i]=true;persist();paint();}
-    else{fb.textContent='Not quite — try again.';fb.classList.add('bad');}
+    else{
+      btn.classList.add('wrong');btn.disabled=true;
+      misses[i]=(misses[i]||0)+1;
+      const hint=questions[i].hint;
+      fb.classList.add('bad');
+      fb.textContent='Not quite. '+(hint?'Hint: '+hint+' ':'')+(misses[i]>=2?'Look at the forms table above; try hiding the row and recalling it.':'Try another option.');
+    }
   }));
   if(!$('paradigm').querySelector('[data-recall]')) $('toggle-forms').addEventListener('click',()=>{$('paradigm').classList.toggle('forms-hidden')});
   ['minutes','difficulty','note'].forEach(x => $(x).addEventListener('input',()=>{state[x]=$(x).value;persist();}));
@@ -132,7 +145,8 @@
     if(!confirm('Reset this day\'s answers and local progress record?'))return;
     state=empty();state.solved=Array.from({length:questions.length},()=>false);
     persist();
-    questions.forEach((_q,i)=>{$('feedback-'+i).textContent='';});
+    questions.forEach((_q,i)=>{$('feedback-'+i).textContent='';misses[i]=0;});
+    document.querySelectorAll('.option.wrong').forEach(b=>b.classList.remove('wrong'));
     paint();
   });
   paint();

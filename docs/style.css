@@ -160,3 +160,66 @@ main{max-width:1180px}
 @media(max-width:960px){.layout{display:flex;flex-direction:column;gap:0}.layout>div{display:contents}#paradigm{order:1}#notice{order:2}#practice{order:3}#comparison{order:4}#record{order:5}.layout .panel{width:100%}}
 @media(max-width:480px){main{padding:22px 12px 32px}.panel{padding:18px 14px}.hero-word{display:none}.content .study-table th,.content .study-table td,#paradigm .content .study-table th,#paradigm .content .study-table td{padding:9px 5px}.content .study-table td.form-cell,#paradigm .content .study-table td.form-cell{font-size:17px}.content .study-table tbody th.row-label,#paradigm .content .study-table tbody th.row-label{font-size:12px}.effect-badge{margin-left:2px;min-width:20px;min-height:21px;padding:1px 4px}.recall-cell{padding:4px 1px}.options{grid-template-columns:1fr}.option{font-size:14px;min-height:44px}.day-nav a,.day-nav span{padding:8px;font-size:12px}}
 @media print{.recall-toolbar,.recall-help,.table-controls,.reveal-prompt{display:none!important}.recall-cell.is-hidden .form-answer,#paradigm.effects-hidden .effect-badge{visibility:visible!important}.recall-cell,.recall-cell.is-hidden{border:0;background:transparent}.table-scroll{overflow:visible;break-inside:avoid}.study-table{min-width:0!important}.layout{display:block}}
+
+/* Lesson-index links (the plan table is restyled as .study-table) */
+.study-table th.row-label a{color:var(--green);text-decoration:none;font-weight:750}
+
+/* Quiz: options already tried and wrong */
+.option.wrong,.option.wrong:disabled{opacity:1;color:var(--sub);border-style:dashed;border-color:var(--error);background:transparent;text-decoration:line-through}
+.progress-tag{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--green);white-space:nowrap}
+.progress-tag.local{color:var(--sub);font-weight:600}
+
+/* Dark theme: follows the system setting. Tokens first, then the few hard-coded light surfaces. */
+@media (prefers-color-scheme: dark){
+:root{--ink:#e3ece6;--sub:#a3b8ab;--paper:#0e1713;--card:#16221d;--line:#2c4037;--deep:#0a251c;--green:#6fd0a6;--mint:#1b2e26;--gold:#2e2a18;--error:#ff9a8f;--success:#7bdab0;--ring:#5aae8a}
+.topbar a{color:#d3f5e1}
+.hero-word{color:#8fd1b3;opacity:.55}
+.pill{background:#1b2b24;border-color:#35503f;color:#a9d8c1}
+.irish,.minute,.small,.aside,.note,.legend,.site-footer,.foot,.recall-count,.recall-help,.historical-intro{color:var(--sub)}
+.irish{color:#8fd1b3}
+th{color:#a3b8ab}
+td{border-bottom-color:#243830}
+.focus,.plan-table .today-row{background:#1d3329}
+.btn,.day-nav a,.day-nav span,.option,details,input,select,.table-scroll{background:#1a2822;color:var(--ink)}
+.btn{border-color:#3a5646}
+.btn:hover:not(:disabled),.day-nav a:hover,.option:hover:not(:disabled),.recall-cell:hover{background:#223a2f}
+.btn-main{background:#2b7a5c;border-color:#2b7a5c;color:#fff}
+.btn-main:hover:not(:disabled){background:#35906d}
+.btn-quiet{background:transparent}
+.option{border-color:var(--line)}.option[aria-pressed="true"]{background:#1f4033;border-color:var(--green)}
+details>summary{color:#8fd1b3}details .inside{color:#c9d8cf}
+.historical,#comparison summary{background:#262316}
+#comparison{border-color:#4a4426}
+.historical .inside.content h3{color:#d6c98c}
+.historical-guide a,.btn{color:#a9e0c5}.btn-main{color:#fff}
+input,select{border-color:#3a5646}
+label{color:#b9ccc0}
+.bar{background:#243830}
+noscript{background:#3a3115;border-color:#5a4d22;color:#f0e2b3}
+.callout,#notice .callout{background:#1b2e26}
+.callout{border-left-color:var(--green)}#notice .callout{border-left-color:#4fb08a}
+.content strong{color:#9fe0c0}
+.content a,.plan-table a{color:var(--green)}
+.badge-due{color:#7bdab0}.badge-wait{color:#d5b27a}.flag{color:#8fd1b3}.flag.missing{color:#d5b27a}
+.hidden-forms .form-text{background:#2c4a3b}
+.forms-hidden .content table tbody td:nth-child(2){background:#2c4a3b}
+.historical .inside.content blockquote{border-left-color:#7d7442}
+.manual textarea{background:#1a2822;color:var(--ink);border-color:#3a5646}
+.table-scroll{border-color:#2f4739}
+.content .study-table thead th,#paradigm .content .study-table thead th{background:#203329;color:#cfe3d7}
+#paradigm .content thead{background:#203329}
+.content .study-table tbody th.row-label,#paradigm .content .study-table tbody th.row-label{color:#b7cabe}
+.content .study-table tbody tr:nth-child(even),#paradigm .content tbody tr:nth-child(even){background:#192620}
+.content .study-table th,.content .study-table td,#paradigm .content .study-table th,#paradigm .content .study-table td{border-bottom-color:#263a31}
+.content .study-table td.form-cell,#paradigm .content .study-table td.form-cell{color:#9fe0c0}
+.recall-cell:hover{border-color:#3d5f4e}
+.recall-cell.is-hidden{background:#233a2f;border-color:#4d6d5c}
+.reveal-prompt{color:#b6d6c4}
+.effect-badge{background:#1f3329;border-color:#43614f;color:#b5dcc6}
+.effect-N{background:#1d2a42;color:#a9c3ee;border-color:#3d5584}
+.effect-H{background:#3a3016;color:#e8cf8c;border-color:#6b5a26}
+.effect-0{background:#222b26;color:#aab6ae;border-color:#445149}
+#paradigm .content h3{color:#cfe8da;border-bottom-color:#3b5a49}
+.effect-key{background:#18261f}
+.table-scroll:focus-visible{outline-color:#5aae8a}
+}
