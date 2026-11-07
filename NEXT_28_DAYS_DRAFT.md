@@ -38,7 +38,7 @@ Design choices
 | 039 | 18.1–18.2 | Conjugated prepositions 1: *do* / *ar* / *fo* with pronominal endings | S |
 | 040 | 18.3 | S1 verbs: the present, absolute and conjunct | V |
 | 041 | 18.4 | Compound S1 verbs | V |
-| 042 | 18.5; 19.1 | Exercise + the excerpt from "St Patrick's Lorica" (19.1, *Dia dom chumgabail…*) — cumulative review of Weeks 1–6 | T |
+| 042 | 18.5; 19.1 | Exercise + the excerpt from "St Patrick's Lorica" (19.1, beginning *cumachtae nDé dom chumgabail…*) — cumulative review of Weeks 1–6 | T |
 
 ## Week 7 | i-stems, S2/S3 verbs, more prepositions
 
@@ -50,7 +50,7 @@ Design choices
 | 046 | 21.1 | Conjugated prepositions 2 | S |
 | 047 | 21.2–21.3 | Secondary (nominal) prepositions; demonstrative particles | S |
 | 048 | 21.4–21.5 | S2 and S3 verbs: first contrasts with W1/W2/S1 | V |
-| 049 | 21.6 | Prehistory of the S1, S2, S3 ending sets. Stifter's caution: the pre-Celtic (≈PIE) inputs are "pretty certain", the "Insular Celtic" intermediate forms "far from undisputed", and S3 is not reconstructed below Insular Celtic; review of Days 043–048 | H / T |
+| 049 | 21.6 | Prehistory of the S1, S2, S3 ending sets. Stifter's caution: the pre-Celtic (≈PIE) inputs are "pretty certain", the "Insular Celtic" intermediate forms "far from being undisputed", and S3 is not reconstructed below Insular Celtic; review of Days 043–048 | H / T |
 
 ## Week 8 | u-stems, numerals, copula
 
