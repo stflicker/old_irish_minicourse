@@ -1,4 +1,4 @@
-# Sengoídelc — daily Old Irish (v0.4)
+# Sengoídelc — daily Old Irish (v0.7)
 
 **Book:** David Stifter, *Sengoídelc: Old Irish for Beginners* (2006)  
 **First scheduled lesson:** 10 October 2026, Japan time  
@@ -11,9 +11,10 @@ A small Markdown-led course with an interactive static HTML reader, an automatic
 - [**Try the HTML interface**](docs/index.html) → select Day 001.
 - [Usage and setup](USAGE.md) → how to publish the site and enable the daily workflow.
 - [The locked first 28 days](FIRST_28_DAYS.md) → the canonical topic order (copied *unchanged* from v0.2).
-- [Progress](PROGRESS.md) → one row per scheduled day once the daily job runs.
+- [Progress](PROGRESS.md) → one row per scheduled day: `published` = page exists; `completed` = you submitted the feedback Issue.
+- [Changelog](CHANGELOG.md) → what changed in each version.
 
-## New: historical morphology track (v0.5)
+## Historical morphology track (added v0.5)
 
 Every daily lesson now offers an **expanded, open-by-default historical morphology section**: PIE reconstructed forms and functions; their Proto-Celtic/early Irish development; Old Irish inflection; and the distinction between regular sound change, inherited categories, analogical innovations and debated hypotheses. The core practical lesson stays around 10–15 minutes; the historical section adds about 5–8 optional minutes. [Comparative morphology guide](HISTORICAL_MORPHOLOGY.md).
 

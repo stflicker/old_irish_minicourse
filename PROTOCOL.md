@@ -1,4 +1,4 @@
-# Daily Old Irish teaching and publication protocol (v0.6)
+# Daily Old Irish teaching and publication protocol (v0.7)
 
 ## Learner and pace
 
