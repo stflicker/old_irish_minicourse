@@ -1,6 +1,6 @@
 ---
 document: starting-queue
-version: 0.3.0
+version: 0.4.0
 status: agreed
 source_edition: "Stifter 2006"
 ---
@@ -10,6 +10,8 @@ source_edition: "Stifter 2006"
 > **Agreed starting sequence.** These are our micro-lesson targets, not the textbook’s own day divisions. The daily push sends one planned target per date; the learner’s *completed* sessions are tracked separately. Difficult items may be revisited without changing the 28-row topic order.
 >
 > *v0.3: the wording of Days 001–007 was revised with the learner's approval when those lessons were rewritten as “historical cards”; Stifter sections are unchanged.*
+>
+> *v0.4: new Day 012 (verb road map). The former Days 012–013 moved to 013–014; the former check Day 014 was folded into the new Day 014. Awaiting the learner's confirmation.*
 
 ## Week 1 | Masculine and neuter o-stems
 
@@ -31,9 +33,9 @@ source_edition: "Stifter 2006"
 | 009 | 7.1-7.2 | Masculine article, plural and one variant | S |
 | 010 | 7.3 | Neuter article in a noun phrase | S |
 | 011 | 7.4 | o-stem adjective agreement | N / S |
-| 012 | 8.3-8.4 | W1 verb: selected present singular forms | V |
-| 013 | 8.4 | W1 verb: selected present plural forms | V |
-| 014 | 8.5; 9.2 optional | Two short form-identification items | T / V |
+| 012 | 8.1-8.2; F.6-F.7 | The Old Irish verb: a road map (classes, absolute/conjunct, where each part is taught) | V |
+| 013 | 8.3-8.4 | W1 verb: selected present singular forms | V |
+| 014 | 8.4-8.5; 9.2 optional | W1 verb: selected present plural forms; two short form-identification items | V / T |
 
 ## Week 3 | Feminine a-stems and inflected noun phrases
 

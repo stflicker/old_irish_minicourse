@@ -15,6 +15,7 @@ CASE_HELP = {
  'Nominative': 'Typically the subject or a predicate noun',
  'Genitive': 'Typically a dependent noun: of ...',
  'Prepositional': 'The case also called dative; governed by appropriate prepositions',
+ 'Dative': 'Indirect object and the case after many prepositions (Stifter: prepositional)',
  'Accusative': 'Typically the direct object; also governed by some prepositions',
  'Vocative': 'Direct address; the particle a has its own incoming lenition',
 }
@@ -110,7 +111,7 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
         toolbar.append(counter)
         content.insert_before(toolbar)
         tip = soup.new_tag('p', attrs={'class':'recall-help'})
-        tip.string = 'Hide both singular and plural together, or tap any form to practise one cell. Tab + Enter also works.'
+        tip.string = 'Hide both singular and plural together, or tap any form to practise it alone. Tab + Enter also works.'
         toolbar.insert_after(tip)
     for index, table in enumerate(list(soup.find_all('table')),1):
         if table.find_parent(class_='table-scroll'):
