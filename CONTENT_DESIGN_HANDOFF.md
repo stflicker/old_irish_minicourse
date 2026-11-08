@@ -69,8 +69,38 @@ Quiz: 3 questions, one of them about the history; the correct option index must 
 * `paradigm_revision: 7` in the frontmatter protects hand-written lessons from `scripts/revise_paradigms.py` (which otherwise overwrites `## Paradigm`). Keep it in every lesson.
 * The builder accepts 1–3 questions; `scripts/test_tables.py` was changed to allow 3.
 * `FIRST_28_DAYS.md` is parsed by `scripts/course.py` (exactly 28 rows, `001…028`); the build warns if `stifter:` in the lesson does not contain the row's section number.
-* Web access from the cloud session: a personal environment `old_irish_minicourse` allows `lrc.la.utexas.edu`, `en.wikipedia.org`, `en.wikisource.org`, `pmc.ncbi.nlm.nih.gov`, `archive.org`, `ia800605.us.archive.org`, `www.cambridge.org`, `en.wiktionary.org`. Observed: `curl` to EIEOL works; PMC answers with a bot-check page (do not try to bypass it); Wiktionary rate-limited (429); an `archive.org` fetch was refused by the session's permission classifier; `WebFetch` kept failing on newly allowed hosts. `WebSearch` works for summaries. Ask the user for text excerpts when a source cannot be read.
+* Cloud environment and web access: see **§5a** below.
 * **The Stifter PDF** is not in the repository and must not be committed (copyright; the repository is public). It lives in the user's Google Drive (the connector returns only the first ~183,000 characters, ≈ pp. 1–68) and was also attached to the session (full text layer, 402 PDF pages). A new session needs it re-attached.
+
+## 5a. Cloud environment
+
+| | |
+|---|---|
+| Name / id | `old_irish_minicourse` · `env_013XVGzxJKc29J9Gc3qi5V3o` (personal, created for this repository) |
+| Repository | `stflicker/old_irish_minicourse`, default branch `main`; work so far is on `claude/focused-newton-92w684` |
+| Network | *limited*; package registries allowed (`pip` works); MCP-server hosts allowed |
+| Extra hosts | `lrc.la.utexas.edu` (EIEOL), `en.wikipedia.org`, `en.wiktionary.org`, `en.wikisource.org`, `pmc.ncbi.nlm.nih.gov`, `archive.org`, `ia800605.us.archive.org`, `www.cambridge.org` |
+| Variables / setup script | none; every fresh container needs `pip install -r scripts/requirements.txt` before building |
+| Other environments on the account | `Default` (no extra hosts), `Payroll app`, `vedasorting` — unrelated, do not use |
+
+**A new session must be created *in this environment* to get these hosts.** Sessions started in `Default` cannot reach the literature sites. If a host is missing, a session can propose it (`update_environment`, exact hostnames only, no wildcards); the user must approve each change.
+
+**What was observed (so you do not repeat the experiments):**
+
+* `curl` through the session proxy works for EIEOL. It was used to read Grammar §6 and §13. Do not send a spoofed browser user-agent.
+* `pmc.ncbi.nlm.nih.gov` returns a reCAPTCHA page, not the paper. The permission classifier denied a spoofed-browser attempt (“Bot Check Circumvention”). Do not try to get around a bot check; ask the user for the text instead.
+* `archive.org` (Matasović's dictionary scan): the classifier denied the `curl` (“Containment Escape”), and `WebFetch` could not resolve the host. Treat Matasović as *not readable* unless the user pastes the entry.
+* `en.wiktionary.org` answered HTTP 429 (rate limit). Do not hammer it.
+* `WebFetch` kept failing with “getaddrinfo ENOTFOUND” on hosts added mid-session; the proxy (and so `curl`) picked them up first. `WebSearch` works for summaries and is the fallback for “is there a source for X”.
+* A host change can take up to about an hour to reach every tool; a restarted session or a new session in the environment does not have this delay.
+
+**Tools available in the container:** Python 3 with `mistune`, `PyYAML`, `beautifulsoup4`, `lxml`, `Pillow` after the `pip install`; `pdftotext` / `pdftoppm` (poppler) for the PDF; Node and Playwright with a pre-installed Chromium for screenshots (`require('playwright')`, no browser install needed).
+
+**Connectors and MCP:** Google Drive (connected in claude.ai; read-only use, 10 MB download limit, text extraction cut at ≈ 183,000 characters) and the GitHub MCP tools. The session's `gh` CLI is not available; use the MCP tools for GitHub, and use `gh api` only for search.
+
+**Git/CI:** push only to your designated branch; no PR unless the user asks. Pushes from a non-`main` branch trigger “Old Irish daily publication”, which currently fails within a second (runs #97–#100). That belongs to the deployment session; do not try to fix it from a content session.
+
+**Permission mode:** `auto`. The classifier may deny actions that look like circumventing a block; when that happens, stop, finish the rest, and tell the user what was blocked and why it was needed.
 
 ## 6. State of the work
 
