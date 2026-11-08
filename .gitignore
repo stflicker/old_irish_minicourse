@@ -4,3 +4,6 @@ __pycache__/
 .DS_Store
 tests/downloaded_progress.md
 *.zip
+# Private excerpts of the copyrighted textbook: never commit
+tools/stifter_excerpts/
+*.pdf

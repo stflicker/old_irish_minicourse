@@ -76,25 +76,24 @@ jobs:
       - name: Deploy interactive site
         id: deploy
         uses: actions/deploy-pages@v4
-      - name: Verify Day 005 revision on the live public site
+      - name: Verify the live site serves this build
         env:
           PAGES_URL: ${{ steps.deploy.outputs.page_url }}
         run: |
           set -euo pipefail
-          URL="${PAGES_URL%/}/days/005.html?v=${GITHUB_SHA}"
-          grep -Fq 'Short and long neuter plurals' docs/days/005.html
-          if grep -Fq 'not another nominative' docs/days/005.html; then
-            echo "::error::Old Day 005 sentence still present in generated HTML"
-            exit 1
-          fi
+          # Compare the deployed Day 001 page with the one just built: same <title> and same stylesheet version hash.
+          TITLE="$(grep -o '<title>[^<]*</title>' docs/days/001.html | head -1)"
+          CSS="$(grep -o 'style.css?v=[0-9a-f]*' docs/days/001.html | head -1)"
+          test -n "$TITLE" && test -n "$CSS"
+          URL="${PAGES_URL%/}/days/001.html?v=${GITHUB_SHA}"
           for attempt in 1 2 3 4 5 6 7 8; do
-            if curl --fail --location --silent --show-error --max-time 15 --header 'Cache-Control: no-cache' "$URL" -o /tmp/day005-live.html; then
-              if grep -Fq 'Short and long neuter plurals' /tmp/day005-live.html && ! grep -Fq 'not another nominative' /tmp/day005-live.html; then
-                echo "Verified revised Day 005 publicly at: $URL"
+            if curl --fail --location --silent --show-error --max-time 15 --header 'Cache-Control: no-cache' "$URL" -o /tmp/day001-live.html; then
+              if grep -Fq "$TITLE" /tmp/day001-live.html && grep -Fq "$CSS" /tmp/day001-live.html; then
+                echo "Verified the live site matches this build: $URL"
                 exit 0
               fi
             fi
             sleep 12
           done
-          echo "::error::Public Day 005 still has stale content: $URL"
+          echo "::error::The live Day 001 page does not match the build: $URL"
           exit 1

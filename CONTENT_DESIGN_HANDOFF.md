@@ -70,7 +70,7 @@ Quiz: 3 questions, one of them about the history; the correct option index must 
 * The builder accepts 1–3 questions; `scripts/test_tables.py` was changed to allow 3.
 * `FIRST_28_DAYS.md` is parsed by `scripts/course.py` (exactly 28 rows, `001…028`); the build warns if `stifter:` in the lesson does not contain the row's section number.
 * Cloud environment and web access: see **§5a** below.
-* **The Stifter PDF** is not in the repository and must not be committed (copyright; the repository is public). It lives in the user's Google Drive (the connector returns only the first ~183,000 characters, ≈ pp. 1–68) and was also attached to the session (full text layer, 402 PDF pages). A new session needs it re-attached.
+* **The Stifter PDF** is not in the repository and must never be committed (copyright; the repository is public; `.gitignore` excludes `*.pdf`). The owner keeps **excerpts** in a private Google Drive folder (`Stifter_S01…S10`, made with `scripts/split_stifter_pdf.py`; each small enough for the Drive connector), or attaches the full PDF to a session (402 PDF pages, printed page = PDF page − 12). Reading the whole book through the connector fails: it truncates at ≈ 183,000 characters (≈ pp. 1–68). Details: **§5b** and `OWNER_SETUP.md`.
 
 ## 5a. Cloud environment
 
@@ -101,6 +101,56 @@ Quiz: 3 questions, one of them about the history; the correct option index must 
 **Git/CI:** push only to your designated branch; no PR unless the user asks. Pushes from a non-`main` branch trigger “Old Irish daily publication”, which currently fails within a second (runs #97–#100). That belongs to the deployment session; do not try to fix it from a content session.
 
 **Permission mode:** `auto`. The classifier may deny actions that look like circumventing a block; when that happens, stop, finish the rest, and tell the user what was blocked and why it was needed.
+
+## 5b. Session self-setup (no owner action needed)
+
+Everything here a session can do itself when prompted. Things only the owner can do (Drive upload, Project instructions, GitHub settings) are in `OWNER_SETUP.md`.
+
+### Bootstrap prompt (the owner pastes this, or the Project instructions imply it)
+
+> Role: **content** for Days 008–014. Read `CONTENT_DESIGN_HANDOFF.md`, `REVIEW_FIRST_28_DAYS.md`, `REVIEW_CONTENT_QUALITY.md`, and the model lessons `lessons/OI-D001.md … OI-D007.md`. Do the first-five-minutes checklist, then rewrite Days 008–014 as historical cards using the Stifter excerpts in Drive. Report when done.
+
+(Other roles: **design/deployment** — CSS, JS, home page, GitHub Pages; **review** — fact-check a day range against Stifter and write findings into `REVIEW_*.md`, no lesson edits.)
+
+### First five minutes (every session)
+
+1. **Where am I?** `get_environment` — expect `old_irish_minicourse`; if it says `Default`, tell the owner (the literature sites are blocked there).
+2. **Code.** `git status`; `git fetch origin main`; work on the designated branch; `python -m pip install -q -r scripts/requirements.txt pypdf`; `python scripts/build_site.py && python scripts/test_tables.py` must pass before you change anything.
+3. **Sources.** Drive: search `title contains 'Stifter_S'`. Read only the excerpt you need (`read_file_content`; each is small enough). If nothing is found, ask the owner to upload the excerpts or attach the PDF; do not guess from memory.
+4. **Label the session** (see below).
+
+### Things a session may do on its own initiative
+
+| Need | How |
+|---|---|
+| Name and tag the session | `set_session_title` → `OIM · content · Days 008–014` (pattern `OIM · <role> · <scope>`); `set_session_tags` add `["old-irish-minicourse", "role:content", "days:008-014"]`. This only helps listing (`list_sessions`); it does not put the session into a claude.ai Project. |
+| Install dependencies | `python -m pip install -q -r scripts/requirements.txt pypdf` (package registries are allowed). |
+| Add a host to the network | Only on a concrete need (a blocked request). `update_environment` with `environment_name: "old_irish_minicourse"`, `add_allowed_hosts: [<exact hostname>]`, `applies_to: "my personal environment: all of my future sessions that use it, not only this one"`. The owner approves each change. No wildcards. |
+| Read the local PDF | `pdftotext -f <pdf page> -l <pdf page> -layout file.pdf -` and `pdftoppm -r 120 -png` for the page image. Do not run Python from a directory that contains files named like standard-library modules (`bisect.py`, `cmp.py`, `random.py`…): Python will import them instead of the stdlib. A scratch script named `bisect.py` re-ran itself on every `python3` call and silently rewrote `docs/` in an earlier session. |
+| Take screenshots | Playwright is installed (`require('playwright')`, `chromium.launch()` with no options). Pass `deviceScaleFactor: 2` only for screenshots the owner will see. |
+
+**Propose once, and only when the owner agrees:** an environment **setup script** so that each new container installs the build dependencies automatically. It needs the owner's approval in a prompt. Use `update_environment` with `script_change: "adds a setup script"` and this script (the repository directory is `old_irish_minicourse`; the script runs as root, before the session starts, in the directory that holds the checkouts):
+
+```bash
+if [ -d old_irish_minicourse ]; then
+  (cd old_irish_minicourse && python3 -m pip install -q -r scripts/requirements.txt pypdf)
+fi
+```
+
+Prompt the owner can give: *“Propose the setup script from §5b of the handoff for the environment `old_irish_minicourse`.”* (Not yet applied.)
+
+### Branches, files and parallel sessions
+
+* One branch per session (the harness assigns `claude/<name>`); never push to another branch.
+* **File ownership by role.** Content sessions edit only `lessons/OI-D###.md` for their day range, plus `FIRST_28_DAYS.md` rows of those days, plus review notes. Design/deployment edits `docs/style.css`, `docs/app.js`, `scripts/build_site.py`, `scripts/table_tools.py`, `.github/`, README/USAGE.
+* **Do not commit `docs/` from a content session.** CI regenerates it; hand-built copies cause merge conflicts. After a local build run `git restore docs/` before committing.
+* Before asking for a merge: `git fetch origin main && git rebase origin/main` (or merge), then build and test again.
+* Open a pull request **only if the owner asks**; after creating one, ask whether to `subscribe_pr_activity`.
+* Suggested split for parallel content sessions (owner assigns): A = Days 008–014, B = Days 015–021, C = Days 022–028, D = Days 029–056 once Stifter pp. 77–121 are available. Two sessions must never write the same day.
+
+### Report format at the end of a session
+
+Files changed; which Stifter pages were checked on page images; anything *Open* or *not checked directly*; anything that contradicts another source; what the next session should do.
 
 ## 6. State of the work
 
