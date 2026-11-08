@@ -33,6 +33,8 @@ Every daily lesson now offers an **expanded, open-by-default historical morpholo
 | `scripts/build_site.py` | Builds all 28 pages from the Markdown |
 | `.github/workflows/daily-publish.yml` | Runs the publication record and site build daily on GitHub |
 | `PROTOCOL.md` | Authoring, quality, progression, and record rules |
+| `CONTENT_DESIGN_HANDOFF.md` | How lessons are designed, sourced and verified (for content sessions) |
+| `REVIEW_FIRST_28_DAYS.md`, `REVIEW_CONTENT_QUALITY.md`, `NEXT_28_DAYS_DRAFT.md` | Audit of Days 1–28 and the Days 29–56 outline |
 
 ## Important limits
 
