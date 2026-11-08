@@ -92,11 +92,11 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
             oldbar.decompose()
         content = paradigm.select_one('.content')
         key = next((p for p in content.find_all('p', recursive=False)
-                    if p.get_text(' ',strip=True).startswith('Following-word effects:')), None)
+                    if p.get_text(' ',strip=True).startswith(('Following-word effects:', 'Mutation of the next word:'))), None)
         if key:
             details = soup.new_tag('details', attrs={'class':'effect-key'})
             summary = soup.new_tag('summary')
-            summary.string = 'L / N / H / 0 - how to read the following-word markers'
+            summary.string = 'L / N / H / 0 - how to read the marks on the next word'
             details.append(summary)
             key.replace_with(details)
             details.append(key)
