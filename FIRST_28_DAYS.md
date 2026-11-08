@@ -11,7 +11,7 @@ source_edition: "Stifter 2006"
 >
 > *v0.3: the wording of Days 001–007 was revised with the learner's approval when those lessons were rewritten as “historical cards”; Stifter sections are unchanged.*
 >
-> *v0.4: new Day 012 (verb road map). The former Days 012–013 moved to 013–014; the former check Day 014 was folded into the new Day 014. Awaiting the learner's confirmation.*
+> *v0.4: new Day 012 (verb road map). The former Days 012–013 moved to 013–014; the former check Day 014 was folded into the new Day 014. Confirmed by the learner.*
 >
 > *v0.5: small wording changes to Days 021, 024, 025, 026 after the curriculum review; plain-language titles and subtitles for every day are in [COURSE_PLAN_56_DAYS.md](COURSE_PLAN_56_DAYS.md).*
 
@@ -35,7 +35,7 @@ source_edition: "Stifter 2006"
 | 009 | 7.1-7.2 | Masculine article, plural and one variant | S |
 | 010 | 7.3 | Neuter article in a noun phrase | S |
 | 011 | 7.4 | o-stem adjective agreement | N / S |
-| 012 | 8.1-8.2; F.6-F.7 | The Old Irish verb: a road map (classes, absolute/conjunct, where each part is taught) | V |
+| 012 | 8.1-8.2; F.6-F.7 | The Old Irish verb: a road map (classes, tenses and moods, how one verb form is built) | V |
 | 013 | 8.3-8.4 | W1 verb: selected present singular forms | V |
 | 014 | 8.4-8.5; 9.2 optional | W1 verb: selected present plural forms; two short form-identification items | V / T |
 
@@ -55,17 +55,17 @@ source_edition: "Stifter 2006"
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| 022 | 12.1 | W2a verbs, small present-tense slice | V |
+| 022 | 12.1 | W2a verbs: the present tense | V |
 | 023 | 12.1 | W2b verbs: contrast with W2a | V |
 | 024 | 12.3 | Where the two ending sets come from: what is known and what is debated | H / V |
 | 025 | 12.4 | Possessive pronouns: the whole set; *a* 'his, her, their' and its mutations | S |
-| 026 | 13.1 | Short reading from the poem (brief pieces only, rest referenced), only grammar already known | T |
+| 026 | 13.1-13.2 | Verse and questions: how poetry differs from prose; *innad*; 'believe in' (short quotations only) | T / S |
 | 027 | 14.1 | Masculine io-stems: first contrasts | N |
 | 028 | 14.2 | Neuter io-stems: first contrasts | N |
 
 ### Explicit carry-over after Day 028
 
-The rest of Lesson 14 (especially 14.3-14.4 on io-stem adjectives and exercises) is **not skipped**. Begin there before Lesson 15. Lesson 9's varia, parts of Lesson 13, and other unselected exercises are held in a **practice pool** to be inserted at suitable points rather than silently discarded.
+The rest of Lesson 14 (especially 14.3-14.4 on io-stem adjectives and exercises) is **not skipped**. Begin there before Lesson 15. Lesson 9's varia, parts of Lesson 13, and other unselected exercises are held in a **set of extra exercises** to be used inside days rather than silently discarded.
 
 ### Quality control
 
