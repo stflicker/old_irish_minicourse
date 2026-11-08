@@ -22,7 +22,7 @@ The first 28 days are feasible: each day has one target, nouns and verbs alterna
 - **Day 026** teaches what is new in 13.1-13.2: how verse differs from prose (filler phrases, special wording), the question particle *innad* and 'believe in'. Only short pieces of Stifter's poem are quoted; the rest is referenced.
 - **Subtitles of Days 008-028** are rewritten in plain language. Terms like "revealing cell" are gone.
 - **Days 012-014** (verb road map, then W1 present singular and plural) are confirmed by the learner.
-- **Day 012** will be widened: besides classes and the two ending series, it must show all tenses, moods and voices, the aspect distinctions, and the structure of a full verb form (preverbs, stress, stem, ending, infixed pronoun). The current file covers only classes and endings.
+- **Day 012** has been rewritten as a structured overview: the parts of one verb form, person and number in both series, a table of tenses and moods, the sequence-of-tenses matrix, voice and non-finite forms, and the verb classes.
 
 Days 029-056 follow Stifter's lessons 14.3-24 in order. Every day carries new material; practice is added inside a day, never as a day of its own. Stifter's readings, tests and exercise sections are used as practice inside days, and his varia sections (small new points) are used as new material.
 
@@ -131,10 +131,10 @@ Days 029-056 follow Stifter's lessons 14.3-24 in order. Every day carries new ma
 
 ## Terminology policy and audit (to apply when lesson content is revised)
 
-Rule: use Stifter's own term, or the standard term in textbooks; never a name of ours; explain each technical term once, at first use, in a short plain sentence.
+Rule: use Stifter's own term, or the standard term of the textbooks and research literature (McCone, Thurneysen's *Grammar of Old Irish*, Strachan; Indo-European terms as in Fortson or Weiss); never a name of ours; explain each technical term once, at first use, in a short plain sentence.
 
 - **Prepositional**: the learner prefers Stifter's term. Days 001-007 currently say "dative"; switch to "prepositional (called dative in other grammars)" with a one-time note, and revert the table-tool tooltip.
 - **Already removed**: "cell", "historical card", "status", "slice".
-- **Check and explain at first use** (found in the written lessons): *following-word effects / badges* (L, N, H, 0 are our labels for the mutation of the next word; say "mutation of the next word" and keep the letters as abbreviations), *chain table* (call it "development table: PIE to Old Irish"), *«* (explain once as "replaced by analogy"), *analogy*, *a-affection / i-affection / u-infection* (Stifter's terms; one-line example each), *syncope*, *palatal / non-palatal* (explain as "slender / broad"), *thematic vowel*, *denominative, causative, iterative* (explain with an example), *hiatus verbs*, *nasal-infix present*, *laryngeal*, *citation form*, *paradigm* (say "the full set of forms").
+- **Check and explain at first use** (found in the written lessons): *following-word effects / badges* (L, N, H, 0 are our labels for the mutation of the next word; say "mutation of the next word" and keep the letters as abbreviations), *chain table* (call it "development table: PIE to Old Irish"), *«* (explain once as "replaced by analogy"), *analogy*, *a-affection / i-affection / u-infection* (Stifter's terms; one-line example each), *syncope*, *palatalized / non-palatalized* (Stifter's wording; mention once that older grammars, including Thurneysen, say "slender / broad"), *thematic vowel*, *denominative, causative, iterative* (explain with an example), *hiatus verbs*, *nasal-infix present*, *laryngeal*, *citation form*, *paradigm* (say "the full set of forms").
 - **Standard terms that stay**: nominative, genitive, accusative, vocative, lenition, nasalization, aspiration, gemination, absolute / conjunct, deuterotonic / prototonic (Stifter's), preverb, copula, stem class.
 - **Avoid in plans and tooltips**: "slice", "pool", "target" (use "topic").
