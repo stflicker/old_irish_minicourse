@@ -1,6 +1,6 @@
 ---
 document: starting-queue
-version: 0.4.0
+version: 0.5.0
 status: agreed
 source_edition: "Stifter 2006"
 ---
@@ -12,6 +12,8 @@ source_edition: "Stifter 2006"
 > *v0.3: the wording of Days 001–007 was revised with the learner's approval when those lessons were rewritten as “historical cards”; Stifter sections are unchanged.*
 >
 > *v0.4: new Day 012 (verb road map). The former Days 012–013 moved to 013–014; the former check Day 014 was folded into the new Day 014. Awaiting the learner's confirmation.*
+>
+> *v0.5: small wording changes to Days 021, 024, 025, 026 after the curriculum review; plain-language titles and subtitles for every day are in [COURSE_PLAN_56_DAYS.md](COURSE_PLAN_56_DAYS.md).*
 
 ## Week 1 | Masculine and neuter o-stems
 
@@ -47,7 +49,7 @@ source_edition: "Stifter 2006"
 | 018 | 11.1-11.2 | Feminine article: singular and one key variant | S |
 | 019 | 11.3 | Article after a preposition | S |
 | 020 | 11.4 | a-stem adjective agreement | N / S |
-| 021 | 10-11 | PIE *-eh2* and feminine stem morphology | H |
+| 021 | 10-11 | Feminine a-stems across Indo-European: inherited endings compared with Latin, Greek, Sanskrit | H |
 
 ## Week 4 | W2 verbs, possessives, and io-stems
 
@@ -55,9 +57,9 @@ source_edition: "Stifter 2006"
 |---|---|---|---|
 | 022 | 12.1 | W2a verbs, small present-tense slice | V |
 | 023 | 12.1 | W2b verbs: contrast with W2a | V |
-| 024 | 12.3 | Prehistory of W1/W2 endings; one well-attested contrast | H / V |
-| 025 | 12.4 | Possessive pronouns: first compact pattern | S |
-| 026 | 13.1 | Short poetic reading, only the grammar already known | T |
+| 024 | 12.3 | Where the two ending sets come from: what is known and what is debated | H / V |
+| 025 | 12.4 | Possessive pronouns: the whole set; *a* 'his, her, their' and its mutations | S |
+| 026 | 13.1 | Short reading from the poem (brief pieces only, rest referenced), only grammar already known | T |
 | 027 | 14.1 | Masculine io-stems: first contrasts | N |
 | 028 | 14.2 | Neuter io-stems: first contrasts | N |
 
