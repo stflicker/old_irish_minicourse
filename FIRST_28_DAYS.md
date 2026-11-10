@@ -58,7 +58,7 @@ source_edition: "Stifter 2006"
 | 022 | 12.1 | W2a verbs: the pres | V |
 | 023 | 12.1 | W2b verbs: contrast with W2a | V |
 | 024 | 12.3 | Where the two ending sets come from: what is known and what is debated | H / V |
-| 025 | 12.4 | Possessive pronouns: the whole set; *a* 'his, her, their' and its mutations | S |
+| 025 | 12.4 | Poss pronouns: the whole set; *a* 'his, her, their' and its mutations | S |
 | 026 | 13.1-13.2 | Verse and questions: how poetry differs from prose; *innad*; 'believe in' (short quotations only) | T / S |
 | 027 | 14.1 | Masc io-stems: first contrasts | N |
 | 028 | 14.2 | Neut io-stems: first contrasts | N |

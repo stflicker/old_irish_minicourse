@@ -11,6 +11,21 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class CourseTables(unittest.TestCase):
+    def test_gloss_table_matches_app_js(self):
+        import re
+        from table_tools import GLOSS
+        js=(ROOT/'docs'/'app.js').read_text(encoding='utf-8')
+        block=re.search(r'const GL=\{(.*?)\};',js,re.S).group(1)
+        pairs=dict(re.findall(r"(\w+):'((?:[^'\\]|\\.)*)'",block))
+        self.assertEqual(set(pairs),set(GLOSS))
+
+    def test_abbreviations_get_small_caps_markup(self):
+        from table_tools import add_gloss
+        soup=BeautifulSoup('<p>The gen sg of <em>ind fir</em> and 3pl, pres ind.</p>','html.parser')
+        add_gloss(soup)
+        self.assertEqual([a.get_text() for a in soup.select('abbr.gl')],['gen','sg','3pl','pres ind'])
+
+
     def test_all_twenty_eight_pages(self):
         for day in range(1,29):
             with self.subTest(day=day):

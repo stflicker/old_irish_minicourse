@@ -69,7 +69,7 @@ Days 029-056 follow Stifter's lessons 14.3-24 in order. Every day carries new ma
 | 022 | 12.1 | Weak verbs, class 2a | leicid 'leaves, allows': the present with a palatal root | V |
 | 023 | 12.1 | Weak verbs, class 2b | roithid 'makes run': how to tell it from class 2a | V |
 | 024 | 12.3 | Where the two ending sets come from | What is known and what is debated about abs and conj endings | H / V |
-| 025 | 12.4 | Possessive pronouns | mo, do, a: the whole set, and why a 'his, her, their' needs the next word | S |
+| 025 | 12.4 | Poss pronouns | mo, do, a: the whole set, and why a 'his, her, their' needs the next word | S |
 | 026 | 13.1-13.2 | Verse and questions | How poetry differs from prose; asking 'do you not...?' with innad; 'believe in' | T / S |
 | 027 | 14.1 | Masc io-stems | céile 'companion': the o-stem pattern with a palatal consonant | N |
 | 028 | 14.2 | Neut io-stems | cride 'heart': the neut pattern with a palatal consonant | N |
@@ -106,7 +106,7 @@ Days 029-056 follow Stifter's lessons 14.3-24 in order. Every day carries new ma
 | 044 | 20.2 | Neut i-stems | The neut version of the same stem | N |
 | 045 | 20.3 | Adjectives with i-stems | Adjectives that agree with i-stem nouns | N / S |
 | 046 | 21.1 | Conjugated prepositions: more | Prepositions such as la, fri and ar fused with pronouns | S |
-| 047 | 21.2-21.3 | Longer prepositions and demonstrative particles | Prepositions built from nouns, and the small words that mean 'this' and 'that' | S |
+| 047 | 21.2-21.3 | Longer prepositions and dem particles | Prepositions built from nouns, and the small words that mean 'this' and 'that' | S |
 | 048 | 21.4 | Strong verbs, class 2: present | gaibid 'takes': the same endings with a palatal root | V |
 | 049 | 21.5 | Strong verbs, class 3: present | crenaid 'buys': a verb with a hidden n | V |
 | 050 | 21.6 | Where strong verbs 2 and 3 come from | What is known and what is debated about their prehistory | H / V |
@@ -151,4 +151,4 @@ Applied so far: Day 008 (the *-s-* forms of the article). Also applied: Day 009 
 
 ## Policy: abbreviations for morphology terms
 
-Cases, number, gender, person and verb-form names are written as short standard abbreviations everywhere in lessons, titles and tables: nom, gen, prep (Stifter's prepositional; dative, dat, in other grammars), acc, voc; sg, pl; masc, fem, neut; 1sg ... 3pl; abs, conj, deut, prot; pres, pret, impf, fut, cond, ind, subj, impv, pass. Every lesson carries an "Abbreviations" line under the paradigm heading. A term is written in full only where a lesson defines it (Day 1 for prep/dat, Day 32 for deut/prot). New lessons must follow this list.
+Cases, number, gender, person, verb-form names and the grammar words listed in `REFERENCE.md` are written as short standard abbreviations in lessons, titles and tables: nom, gen, prep (Stifter's prepositional; dative, dat, in other grammars), acc, voc; sg, pl; masc, fem, neut; 1sg ... 3pl; abs, conj, deut, prot; pres, pret, impf, fut, cond, ind, subj, impv, pass; depo, caus, iter, denom, vn, rel, poss, dem; pal, npal (palatalized, non-palatalized). Lesson Markdown uses plain lowercase; the site build turns them into small capitals with tooltips and puts the reference panel (abbreviations, marks [L] [N] [H] [0], palatalization) at the top of each lesson. A term is written in full only where a lesson defines it. New lessons must follow `REFERENCE.md`.

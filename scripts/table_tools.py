@@ -24,12 +24,95 @@ FORM_HEADERS = {
  'conj form after n\u00ed','sg form','pl form',
  'sg form + effect','pl form + effect',
  'sg article + effect','pl article + effect',
- 'sg fused form + effect','pl fused form + effect','possessive form + effect',
+ 'sg fused form + effect','pl fused form + effect','poss form + effect',
 }
 
 
-def add_effect_badges(soup):
-    for text in list(soup.find_all(string=re.compile(r'\[(?:L|N|H|0)\]'))):
+GLOSS = {
+ 'nom':'nominative','gen':'genitive','prep':'prepositional (Stifter\u2019s name for the dative)','acc':'accusative','voc':'vocative','dat':'dative',
+ 'sg':'singular','pl':'plural','masc':'masculine','fem':'feminine','neut':'neuter',
+ 'abs':'absolute','conj':'conjunct','deut':'deuterotonic','prot':'prototonic',
+ 'pres':'present','pret':'preterite','impf':'imperfect','fut':'future','cond':'conditional',
+ 'ind':'indicative','subj':'subjunctive','impv':'imperative','pass':'passive',
+ 'depo':'deponent','caus':'causative','iter':'iterative','denom':'denominative',
+ 'vn':'verbal noun','rel':'relative','poss':'possessive','dem':'demonstrative',
+ 'pal':'palatalized','npal':'non-palatalized',
+}
+_ORD = {'1':'1st','2':'2nd','3':'3rd'}
+# "ind" is also an Old Irish word, so it counts as an abbreviation only after "pres".
+GLOSS_RE = re.compile(r'\b(?:[123](?:sg|pl)|pres ind|' + '|'.join(sorted((k for k in GLOSS if k != 'ind'), key=len, reverse=True)) + r')\b', re.I)
+GLOSS_SKIP = {'script','style','title','em','strong','code','pre','button'}
+
+
+def gloss_title(token):
+    low = token.lower()
+    if low == 'pres ind': return 'present indicative'
+    if low[0] in _ORD and low[1:] in ('sg','pl'):
+        return f"{_ORD[low[0]]} person {GLOSS[low[1:]]}"
+    return GLOSS.get(low)
+
+
+def add_gloss(soup):
+    """Wrap morphology abbreviations in <abbr class="gl"> (rendered in small capitals by CSS)."""
+    for text in list(soup.find_all(string=GLOSS_RE)):
+        if any(p.name in GLOSS_SKIP or 'hero-word' in (p.get('class') or []) or 'option' in (p.get('class') or [])
+               or p.name == 'li' and p.find_parent('details') and p.find_parent('details').find('summary', string=re.compile('Manual answer key'))
+               for p in text.parents if p.name):
+            continue
+        out = []; last = 0
+        for m in GLOSS_RE.finditer(str(text)):
+            out.append(NavigableString(str(text)[last:m.start()]))
+            tag = soup.new_tag('abbr', attrs={'class': 'gl', 'title': gloss_title(m.group(0))})
+            tag.string = m.group(0)
+            out.append(tag); last = m.end()
+        out.append(NavigableString(str(text)[last:]))
+        for node in out: text.insert_before(node)
+        text.extract()
+
+
+REFERENCE = {
+ 'Cases': [('nom','nominative: the subject'),('gen','genitive: of ...'),
+           ('prep','prepositional: the case after many prepositions; Stifter\u2019s name for what other grammars call the dative (dat)'),
+           ('acc','accusative: the object'),('voc','vocative: direct address')],
+ 'Number, gender, person': [('sg, pl','singular, plural'),('masc, fem, neut','masculine, feminine, neuter'),
+           ('1sg, 2sg, 3sg, 1pl, 2pl, 3pl','1st, 2nd, 3rd person singular or plural')],
+ 'Verb forms': [('abs','absolute: ending used with nothing before the verb'),('conj','conjunct: ending used after a particle or preverb'),
+           ('deut, prot','deuterotonic (stress on the 2nd element), prototonic (stress on the 1st)'),
+           ('pres, pret, impf, fut, cond','present, preterite, imperfect, future, conditional'),
+           ('ind, subj, impv','indicative, subjunctive, imperative'),('pass','passive'),
+           ('depo','deponent: a verb with active meaning but its own endings (with an extra r)'),
+           ('denom','denominative: a verb made from a noun or adjective'),
+           ('caus','causative: \u2018makes someone do X\u2019'),('iter','iterative: repeated action'),
+           ('vn','verbal noun: the abstract noun that does the work of an infinitive'),('rel','relative form of a verb'),
+           ('poss, dem','possessive, demonstrative')],
+ 'Marks on the next word': [('[L]','lenition: the first consonant is softened (c, t, p become ch, th, ph; b, d, g, m, s, f are lenited too but this is often not written)'),
+           ('[N]','nasalization: stops are voiced or get a nasal before them (c to g, t to d, p to b; b to mb, d to nd, g to ng), a vowel gets n-; often not written'),
+           ('[H]','aspiration: h- before a vowel, doubling (gemination) of a consonant'),('[0]','no mutation')],
+ 'Palatalization': [('pal, npal','palatalized, non-palatalized: a consonant said with the tongue raised towards the hard palate, or not (older grammars: \u201cslender\u201d and \u201cbroad\u201d)'),
+           ('C\u2032, C','Stifter\u2019s notation for a pal and an npal consonant in his ending tables'),
+           ('spelling','a pal consonant is often shown by an i or e next to it (chaitt), an npal one by a, o or u (catt)')],
+}
+
+
+def reference_panel(soup):
+    details = soup.new_tag('details', attrs={'class': 'effect-key ref-key'})
+    summary = soup.new_tag('summary'); summary.string = 'Reference: abbreviations, marks on the next word, palatalization'
+    details.append(summary)
+    box = soup.new_tag('div', attrs={'class': 'ref-body'})
+    for heading, rows in REFERENCE.items():
+        sec = soup.new_tag('section'); h = soup.new_tag('h4'); h.string = heading; sec.append(h)
+        dl = soup.new_tag('dl')
+        for term, meaning in rows:
+            dt = soup.new_tag('dt'); dt.string = term; dd = soup.new_tag('dd'); dd.string = meaning
+            dl.append(dt); dl.append(dd)
+        sec.append(dl); box.append(sec)
+    details.append(box)
+    add_effect_badges(soup, box)
+    return details
+
+
+def add_effect_badges(soup, root=None):
+    for text in list((root or soup).find_all(string=re.compile(r'\[(?:L|N|H|0)\]'))):
         if text.parent.name in ('script','style','title'):
             continue
         fragments = re.split(r'(\[(?:L|N|H|0)\])', str(text))
@@ -94,12 +177,7 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
         key = next((p for p in content.find_all('p', recursive=False)
                     if p.get_text(' ',strip=True).startswith(('Following-word effects:', 'Mutation of the next word:'))), None)
         if key:
-            details = soup.new_tag('details', attrs={'class':'effect-key'})
-            summary = soup.new_tag('summary')
-            summary.string = 'L / N / H / 0 - how to read the marks on the next word'
-            details.append(summary)
-            key.replace_with(details)
-            details.append(key)
+            key.decompose()   # replaced by the reference panel below
         toolbar = soup.new_tag('div', attrs={'class':'recall-toolbar', 'role':'group', 'aria-label':'Paradigm recall controls'})
         toolbar.append(make_button(soup, 'Hide all forms', id='toggle-forms',
                                    **{'class':'btn','aria-pressed':'false','disabled':''}))
@@ -113,6 +191,7 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
         tip = soup.new_tag('p', attrs={'class':'recall-help'})
         tip.string = 'Hide both sg and pl together, or tap any form to practise it alone. Tab + Enter also works.'
         toolbar.insert_after(tip)
+        content.insert(0, reference_panel(soup))
     for index, table in enumerate(list(soup.find_all('table')),1):
         if table.find_parent(class_='table-scroll'):
             continue
@@ -180,5 +259,6 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
                             'aria-controls':table_id,'aria-pressed':'false','disabled':''}))
             wrapper.insert_before(controls)
     tag_old_irish(soup)
+    add_gloss(soup)
     return str(soup)
 

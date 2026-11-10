@@ -223,3 +223,12 @@ noscript{background:#3a3115;border-color:#5a4d22;color:#f0e2b3}
 .effect-key{background:#18261f}
 .table-scroll:focus-visible{outline-color:#5aae8a}
 }
+
+/* Morphology abbreviations (nom, gen, sg, 3pl ...) in small capitals; hover shows the full term. */
+abbr.gl{font-variant-caps:all-small-caps;font-feature-settings:"c2sc","smcp";letter-spacing:.04em;text-decoration:none;cursor:help}
+.ref-key .ref-body{padding:0 14px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:4px 22px}
+.ref-key h4{margin:12px 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.ref-key dl{margin:0;font-size:13px;line-height:1.55}
+.ref-key dt{font-weight:700;margin-top:6px}
+.ref-key dd{margin:0 0 2px 1.1em}
+#paradigm.effects-hidden .ref-key .effect-badge{visibility:visible}

@@ -61,6 +61,19 @@
     for(let k=items.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[items[k],items[j]]=[items[j],items[k]];}
     items.forEach(el=>box.appendChild(el));
   });
+  // Morphology abbreviations in small capitals (mirrors GLOSS in scripts/table_tools.py).
+  const GL={nom:'nominative',gen:'genitive',prep:'prepositional (Stifter\u2019s name for the dative)',acc:'accusative',voc:'vocative',dat:'dative',sg:'singular',pl:'plural',masc:'masculine',fem:'feminine',neut:'neuter',abs:'absolute',conj:'conjunct',deut:'deuterotonic',prot:'prototonic',pres:'present',pret:'preterite',impf:'imperfect',fut:'future',cond:'conditional',ind:'indicative',subj:'subjunctive',impv:'imperative',pass:'passive',depo:'deponent',caus:'causative',iter:'iterative',denom:'denominative',vn:'verbal noun',rel:'relative',poss:'possessive',dem:'demonstrative',pal:'palatalized',npal:'non-palatalized'};
+  const GLRE=new RegExp('\\b(?:[123](?:sg|pl)|pres ind|'+Object.keys(GL).filter(k=>k!=='ind').sort((a,b)=>b.length-a.length).join('|')+')\\b','gi');
+  const ORD={1:'1st',2:'2nd',3:'3rd'};
+  function glTitle(t){const l=t.toLowerCase();if(l==='pres ind')return 'present indicative';if(/^[123](sg|pl)$/.test(l))return ORD[l[0]]+' person '+GL[l.slice(1)];return GL[l];}
+  function rich(el,text){
+    el.textContent='';let last=0,m;GLRE.lastIndex=0;text=String(text);
+    while((m=GLRE.exec(text))){
+      el.appendChild(document.createTextNode(text.slice(last,m.index)));
+      const a=document.createElement('abbr');a.className='gl';a.title=glTitle(m[0]);a.textContent=m[0];el.appendChild(a);last=m.index+m[0].length;
+    }
+    el.appendChild(document.createTextNode(text.slice(last)));
+  }
   const misses={};
   const {id, questions} = JSON.parse(payload.textContent);
   const key = 'sengoidelc:v3:' + id;
@@ -102,7 +115,7 @@
       const fb=$('feedback-'+i);
       if(state.solved[i]){
         fb.classList.remove('bad');
-        fb.textContent=q.explanation || 'Correct.';
+        rich(fb,q.explanation || 'Correct.');
       }
       document.querySelectorAll('.option[data-question="'+i+'"]').forEach(btn=>{
         btn.disabled=state.solved[i]||btn.classList.contains('wrong');
@@ -124,7 +137,7 @@
       misses[i]=(misses[i]||0)+1;
       const hint=questions[i].hint;
       fb.classList.add('bad');
-      fb.textContent='Not quite. '+(hint?'Hint: '+hint+' ':'')+(misses[i]>=2?'Look at the forms table above; try hiding the row and recalling it.':'Try another option.');
+      rich(fb,'Not quite. '+(hint?'Hint: '+hint+' ':'')+(misses[i]>=2?'Look at the forms table above; try hiding the row and recalling it.':'Try another option.'));
     }
   }));
   if(!$('paradigm').querySelector('[data-recall]')) $('toggle-forms').addEventListener('click',()=>{$('paradigm').classList.toggle('forms-hidden')});
