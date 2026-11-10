@@ -152,3 +152,10 @@ Applied so far: Day 008 (the *-s-* forms of the article). Also applied: Day 009 
 ## Policy: abbreviations for morphology terms
 
 Cases, number, gender, person, verb-form names and the grammar words listed in `REFERENCE.md` are written as short standard abbreviations in lessons, titles and tables: nom, gen, prep (Stifter's prepositional; dative, dat, in other grammars), acc, voc; sg, pl; masc, fem, neut; 1sg ... 3pl; abs, conj, deut, prot; pres, pret, impf, fut, cond, ind, subj, impv, pass; depo, caus, iter, denom, vn, rel, poss, dem; pal, npal (palatalized, non-palatalized). Lesson Markdown uses plain lowercase; the site build turns them into small capitals with tooltips and puts the reference panel (abbreviations, marks [L] [N] [H] [0], palatalization) at the top of each lesson. A term is written in full only where a lesson defines it. New lessons must follow `REFERENCE.md`.
+
+## Policy: voice and content of lesson pages
+
+- No first-person author voice ("I searched", "I could not consult"). State facts impersonally: "Stifter does not explain this".
+- No remarks about how the course was produced or how the source was read (OCR, "text layer", "garbled", "read from the printed phrases", "for this session"). Such caveats go in `VERIFICATION_NOTES.md`.
+- "Open:" in a Summary line is for genuinely open scholarly questions only.
+- Quick answers are not limited to three. Write as many as the topic needs and none that only fill a number.
