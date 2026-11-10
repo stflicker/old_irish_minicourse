@@ -12,19 +12,19 @@ EFFECT_LABELS = {
  '0': 'No regular L, N or H effect prescribed by this form',
 }
 CASE_HELP = {
- 'Nominative': 'Typically the subject or a predicate noun',
- 'Genitive': 'Typically a dependent noun: of ...',
- 'Prepositional': 'The case also called dative; governed by appropriate prepositions',
- 'Dative': 'Indirect object and the case after many prepositions (Stifter: prepositional)',
- 'Accusative': 'Typically the direct object; also governed by some prepositions',
- 'Vocative': 'Direct address; the particle a has its own incoming lenition',
+ 'Nom': 'Nominative: typically the subject or a predicate noun',
+ 'Gen': 'Genitive: typically a dependent noun: of ...',
+ 'Prep': 'Prepositional (called dative in other grammars): the case governed by many prepositions',
+ 'Dat': 'Dative (Stifter: prepositional): indirect object and the case after many prepositions',
+ 'Acc': 'Accusative: typically the direct object; also governed by some prepositions',
+ 'Voc': 'Vocative: direct address; the particle a has its own incoming lenition',
 }
 FORM_HEADERS = {
- 'form','phrase','example phrase','element / form','absolute form',
- 'conjunct form after n\u00ed','singular form','plural form',
- 'singular form + effect','plural form + effect',
- 'singular article + effect','plural article + effect',
- 'singular fused form + effect','plural fused form + effect','possessive form + effect',
+ 'form','phrase','example phrase','element / form','abs form',
+ 'conj form after n\u00ed','sg form','pl form',
+ 'sg form + effect','pl form + effect',
+ 'sg article + effect','pl article + effect',
+ 'sg fused form + effect','pl fused form + effect','possessive form + effect',
 }
 
 
@@ -111,7 +111,7 @@ def polish_page(html: str, *, assets_dir: Path | None = None) -> str:
         toolbar.append(counter)
         content.insert_before(toolbar)
         tip = soup.new_tag('p', attrs={'class':'recall-help'})
-        tip.string = 'Hide both singular and plural together, or tap any form to practise it alone. Tab + Enter also works.'
+        tip.string = 'Hide both sg and pl together, or tap any form to practise it alone. Tab + Enter also works.'
         toolbar.insert_after(tip)
     for index, table in enumerate(list(soup.find_all('table')),1):
         if table.find_parent(class_='table-scroll'):

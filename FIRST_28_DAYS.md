@@ -19,11 +19,11 @@ source_edition: "Stifter 2006"
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| **001** | 6.4, p. 43 | *ech*: the singular; lost endings leave L/N/H on the next word | N |
-| 002 | 6.4 | *ech*: the plural; two *eich*; where [H] comes from | N |
+| **001** | 6.4, p. 43 | *ech*: the sg; lost endings leave L/N/H on the next word | N |
+| 002 | 6.4 | *ech*: the pl; two *eich*; where [H] comes from | N |
 | 003 | 6.5 | *fer*: the ending vowel decides the root vowel | N |
-| 004 | 6.6 | *cenn*: neuter singular; why the neuter nominative nasalizes | N |
-| 005 | 6.6 | *cenn*: short (inherited) and long (added) neuter plural | N |
+| 004 | 6.6 | *cenn*: neut sg; why the neut nom nasalizes | N |
+| 005 | 6.6 | *cenn*: short (inherited) and long (added) neut pl | N |
 | 006 | 6.7-6.8 | Reading o-stem forms: homonyms; long words and syncope | T / N |
 | 007 | 6.4-6.6 | o-stems across Indo-European: inherited vs replaced endings | H |
 
@@ -31,37 +31,37 @@ source_edition: "Stifter 2006"
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| 008 | 7.1 | Masculine article, singular | S |
-| 009 | 7.1-7.2 | Masculine article, plural and one variant | S |
-| 010 | 7.3 | Neuter article in a noun phrase | S |
+| 008 | 7.1 | Masc article, sg | S |
+| 009 | 7.1-7.2 | Masc article, pl and one variant | S |
+| 010 | 7.3 | Neut article in a noun phrase | S |
 | 011 | 7.4 | o-stem adjective agreement | N / S |
 | 012 | 8.1-8.2; F.6-F.7 | The Old Irish verb: a road map (classes, tenses and moods, how one verb form is built) | V |
-| 013 | 8.3-8.4 | W1 verb: selected present singular forms | V |
-| 014 | 8.4-8.5; 9.2 optional | W1 verb: selected present plural forms; two short form-identification items | V / T |
+| 013 | 8.3-8.4 | W1 verb: selected present sg forms | V |
+| 014 | 8.4-8.5; 9.2 optional | W1 verb: selected present pl forms; two short form-identification items | V / T |
 
 ## Week 3 | Feminine a-stems and inflected noun phrases
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| 015 | 10.1 | Feminine a-stems, singular | N |
-| 016 | 10.1-10.2 | Feminine a-stems, plural/variant | N |
+| 015 | 10.1 | Fem a-stems, sg | N |
+| 016 | 10.1-10.2 | Fem a-stems, pl/variant | N |
 | 017 | 10.3 | *ben* 'woman' as an irregular paradigm | N |
-| 018 | 11.1-11.2 | Feminine article: singular and one key variant | S |
+| 018 | 11.1-11.2 | Fem article: sg and one key variant | S |
 | 019 | 11.3 | Article after a preposition | S |
 | 020 | 11.4 | a-stem adjective agreement | N / S |
-| 021 | 10-11 | Feminine a-stems across Indo-European: inherited endings compared with Latin, Greek, Sanskrit | H |
+| 021 | 10-11 | Fem a-stems across Indo-European: inherited endings compared with Latin, Greek, Sanskrit | H |
 
 ## Week 4 | W2 verbs, possessives, and io-stems
 
 | Day | Book | One active target | Type |
 |---|---|---|---|
-| 022 | 12.1 | W2a verbs: the present tense | V |
+| 022 | 12.1 | W2a verbs: the pres | V |
 | 023 | 12.1 | W2b verbs: contrast with W2a | V |
 | 024 | 12.3 | Where the two ending sets come from: what is known and what is debated | H / V |
 | 025 | 12.4 | Possessive pronouns: the whole set; *a* 'his, her, their' and its mutations | S |
 | 026 | 13.1-13.2 | Verse and questions: how poetry differs from prose; *innad*; 'believe in' (short quotations only) | T / S |
-| 027 | 14.1 | Masculine io-stems: first contrasts | N |
-| 028 | 14.2 | Neuter io-stems: first contrasts | N |
+| 027 | 14.1 | Masc io-stems: first contrasts | N |
+| 028 | 14.2 | Neut io-stems: first contrasts | N |
 
 ### Explicit carry-over after Day 028
 
