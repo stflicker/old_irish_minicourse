@@ -138,3 +138,13 @@ Rule: use Stifter's own term, or the standard term of the textbooks and research
 - **Check and explain at first use** (found in the written lessons): *following-word effects / badges* (L, N, H, 0 are our labels for the mutation of the next word; say "mutation of the next word" and keep the letters as abbreviations), *chain table* (call it "development table: PIE to Old Irish"), *«* (explain once as "replaced by analogy"), *analogy*, *a-affection / i-affection / u-infection* (Stifter's terms; one-line example each), *syncope*, *palatalized / non-palatalized* (Stifter's wording; mention once that older grammars, including Thurneysen, say "slender / broad"), *thematic vowel*, *denominative, causative, iterative* (explain with an example), *hiatus verbs*, *nasal-infix present*, *laryngeal*, *citation form*, *paradigm* (say "the full set of forms").
 - **Standard terms that stay**: nominative, genitive, accusative, vocative, lenition, nasalization, aspiration, gemination, absolute / conjunct, deuterotonic / prototonic (Stifter's), preverb, copula, stem class.
 - **Avoid in plans and tooltips**: "slice", "pool", "target" (use "topic").
+
+## Policy: explanations that Stifter does not give
+
+When a lesson raises a "why" question that Stifter does not answer:
+1. Search other sources first (Thurneysen's *Grammar of Old Irish*, McCone, other textbooks and research papers, standard reference pages) and use an explanation only if a source states it; name the source in the lesson.
+2. If a source gives only part of an answer, give that part and say what is still missing.
+3. If nothing explains it, say so in plain words ("no source I could consult explains this") and present the point as a rule to memorize. Never invent a reason.
+4. Quick-answer questions must be phrased so a beginner can follow them (no jargon without a one-line explanation).
+
+Applied so far: Day 008 (the *-s-* forms of the article). Open items of the same kind: Day 009 (why *ind* before *l, r, n, f*), Day 055 (why the copula's conjunct forms lenite).
