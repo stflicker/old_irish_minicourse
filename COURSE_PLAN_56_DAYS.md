@@ -147,4 +147,4 @@ When a lesson raises a "why" question that Stifter does not answer:
 3. If nothing explains it, say so in plain words ("no source I could consult explains this") and present the point as a rule to memorize. Never invent a reason.
 4. Quick-answer questions must be phrased so a beginner can follow them (no jargon without a one-line explanation).
 
-Applied so far: Day 008 (the *-s-* forms of the article). Open items of the same kind: Day 009 (why *ind* before *l, r, n, f*), Day 055 (why the copula's conjunct forms lenite).
+Applied so far: Day 008 (the *-s-* forms of the article). Also applied: Day 009 (why *ind* before *l, r, n, f*: partial, Toner), Day 055 (why the copula's conjunct forms lenite: no source found).
